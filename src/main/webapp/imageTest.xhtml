@@ -11,9 +11,35 @@
 <h:body>
     <h:panelGroup id="mainContainer" layout="block">
         <h:form>
-            <a4j:poll id="poll" interval="100" enabled="#{true}" render="poll,sprite"/>
+            <table cellpadding="3" cellspacing="1">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td><p:commandButton value="Up" style="width: 100px;" action="#{imageTestBean.up()}" update="@form"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><p:commandButton value="Left" style="width: 100px;" action="#{imageTestBean.left()}" update="@form"/></td>
+                        <td><p:commandButton value="Down" style="width: 100px;" action="#{imageTestBean.down()}" update="@form"/></td>
+                        <td><p:commandButton value="Right" style="width: 100px;" action="#{imageTestBean.right()}" update="@form"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><p:commandButton value="Stop" style="width: 100px;" action="#{imageTestBean.stop()}" update="@form"/></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <p:graphicImage id="sprite" name="#{imageTestBean.loadImage()}" style="position: absolute; top: #{imageTestBean.getNewTopPosition()}px; left: 100px;"/>
+            <a4j:poll id="poll" interval="100" enabled="#{imageTestBean.moving}" render="poll,grid,sprite"/>
+
+            <h:panelGroup layout="block"
+                          id="grid"
+                          style="width: 50px; height: 100px;
+                                 position: absolute;
+                                 top: #{imageTestBean.getTopPosition()}px; left: #{imageTestBean.getLeftPosition()}px;">
+                <p:graphicImage id="sprite" name="#{imageTestBean.loadImage()}"/>
+            </h:panelGroup>
         </h:form>
     </h:panelGroup>
 </h:body>
