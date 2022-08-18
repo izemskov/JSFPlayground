@@ -13,7 +13,7 @@
         <h:form>
             <a4j:poll id="poll" interval="100" enabled="#{true}" render="poll,sprite"/>
 
-            <p:graphicImage id="sprite" name="#{imageTestBean.loadImage()}"/>
+            <p:graphicImage id="sprite" name="#{imageTestBean.loadImage()}" style="position: absolute; top: #{imageTestBean.getNewTopPosition()}px; left: 100px;"/>
         </h:form>
     </h:panelGroup>
 </h:body>
