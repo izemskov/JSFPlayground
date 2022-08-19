@@ -32,7 +32,7 @@ public class ImageTestBean implements Serializable {
         if (moving) {
             if (direction == Direction.DOWN)
                 imageTop = imageTop + 2;
-            if (direction == Direction.UP)
+            if (direction == Direction.UP && imageTop > 0)
                 imageTop = imageTop - 2;
         }
 
@@ -41,7 +41,7 @@ public class ImageTestBean implements Serializable {
 
     public String getLeftPosition() {
         if (moving) {
-            if (direction == Direction.LEFT)
+            if (direction == Direction.LEFT && imageLeft > 0)
                 imageLeft = imageLeft - 2;
             if (direction == Direction.RIGHT)
                 imageLeft = imageLeft + 2;
