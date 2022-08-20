@@ -18,6 +18,9 @@ public class CreatePersonBean implements Serializable {
     }
 
     public String createPerson() {
+        if (person.getName() == null || person.getName().isEmpty())
+            person.setName(person.getUuid());
+
         return "GAME";
     }
 }

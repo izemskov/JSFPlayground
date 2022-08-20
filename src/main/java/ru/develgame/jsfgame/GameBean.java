@@ -2,78 +2,72 @@ package ru.develgame.jsfgame;
 
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
-import ru.develgame.jsfgame.domain.PersonType;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-@Named("imageTestBean")
+@Named("gameBean")
 @SessionScoped
-public class ImageTestBean implements Serializable {
+public class GameBean implements Serializable {
     @Inject
     private Person person;
 
-    public String loadImage() {
-        if (person == null)
-            return "";
+    @Inject
+    private PersonsRegistry personsRegistry;
 
-        String image = "/images/" + person.getPersonType().toString() + "/walk_" + person.getDirection().toString().toLowerCase()
-                + person.getCurrentFrame() + ".png";
+    private List<Person> otherPersons = new ArrayList<>();
+
+    public void updatePerson() {
+        updateImage();
+        updateTopPosition();
+        updateLeftPosition();
+    }
+
+    private void updateImage() {
         if (person.isMoving())
             person.setCurrentFrame(person.getCurrentFrame() + 1);
         if (person.getCurrentFrame() > 8)
             person.setCurrentFrame(1);
-        return image;
     }
 
-    public String getTopPosition() {
-        if (person == null)
-            return "0";
-
+    private void updateTopPosition() {
         if (person.isMoving()) {
             if (person.getDirection() == Direction.DOWN && person.getImageTop() < 768)
                 person.setImageTop(person.getImageTop() + 2);
             if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
                 person.setImageTop(person.getImageTop() - 2);
         }
-
-        return Integer.toString(person.getImageTop());
     }
 
-    public String getLeftPosition() {
-        if (person == null)
-            return "0";
-
+    private void updateLeftPosition() {
         if (person.isMoving()) {
             if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
                 person.setImageLeft(person.getImageLeft() - 2);
             if (person.getDirection() == Direction.RIGHT && person.getImageLeft() < 1024)
                 person.setImageLeft(person.getImageLeft() + 2);
         }
-
-        return Integer.toString(person.getImageLeft());
     }
 
-    public boolean isMoving() {
-        if (person == null)
-            return false;
+    public List<Person> getOtherPersons() {
+        // TODO - optimize that
+        otherPersons.clear();
 
-        return person.isMoving();
-    }
+        Map<String, Person> persons = personsRegistry.getPersons();
+        for (Map.Entry<String, Person> entry : persons.entrySet()) {
+            if (!entry.getKey().equals(person.getUuid())) {
+                otherPersons.add(entry.getValue());
+            }
+        }
 
-    public void setMoving(boolean moving) {
-        if (person == null)
-            return;
-
-        person.setMoving(moving);
+        return otherPersons;
     }
 
     public void stop() {
-        if (person == null)
-            return;
-
         person.setMoving(false);
     }
 
@@ -103,9 +97,5 @@ public class ImageTestBean implements Serializable {
 
     public Person getPerson() {
         return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 }

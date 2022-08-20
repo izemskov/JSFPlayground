@@ -100,4 +100,17 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getTopPosition() {
+        return Integer.toString(imageTop);
+    }
+
+    public String getLeftPosition() {
+        return Integer.toString(imageLeft);
+    }
+
+    public String getImage() {
+        return "/images/" + personType.toString() + "/walk_" + direction.toString().toLowerCase()
+                + currentFrame + ".png";
+    }
 }

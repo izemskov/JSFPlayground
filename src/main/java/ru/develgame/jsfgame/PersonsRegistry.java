@@ -23,4 +23,8 @@ public class PersonsRegistry {
 
         persons.remove(person.getUuid());
     }
+
+    public Map<String, Person> getPersons() {
+        return persons;
+    }
 }
