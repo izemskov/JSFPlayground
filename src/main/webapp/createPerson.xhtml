@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Image Test</title>
+</h:head>
+<h:body>
+    <p:dialog id="createPersonDlg" header="Create Person" widgetVar="createPersonDlg" minHeight="40" width="800" showEffect="fade" modal="true">
+        <h:form>
+            <p:selectOneRadio value="#{createPerson.person.personType}" id="personsType" layout="custom">
+                <f:selectItem itemValue="PERSON_TYPE1" />
+                <f:selectItem itemValue="PERSON_TYPE2" />
+                <f:converter converterId="converter.enum"/>
+            </p:selectOneRadio>
+
+            <div style="display: flex; align-items: stretch;">
+                <p:panel header="Person1" style="margin-right: 20px">
+                    <div style="display: flex; align-items: stretch;">
+                        <div style="position: relative; height: 100px;">
+                            <div style="margin: 0; position: absolute; top: 50%; transform: translateY(-50%);">
+                                <p:radioButton id="personType1" for="personsType" itemIndex="0"/>
+                            </div>
+                        </div>
+                        <p:graphicImage name="/images/PERSON_TYPE1/walk_down1.png" style="margin-left: 30px;"/>
+                    </div>
+                </p:panel>
+
+                <p:panel header="Person2">
+                    <div style="display: flex; align-items: stretch;">
+                        <div style="position: relative; height: 100px;">
+                            <div style="margin: 0; position: absolute; top: 50%; transform: translateY(-50%);">
+                                <p:radioButton id="personType2" for="personsType" itemIndex="1"/>
+                            </div>
+                        </div>
+                        <p:graphicImage name="/images/PERSON_TYPE2/walk_down1.png" style="margin-left: 30px;"/>
+                    </div>
+                </p:panel>
+            </div>
+
+            <div style="display: flex; margin-top: 20px; margin-bottom: 20px;">
+                <div style="margin-right: 10px;">
+                    Name
+                </div>
+                <p:inputText id="Name" value="#{createPerson.person.name}"/>
+            </div>
+            <p:commandButton value="Sign in" style="width: 100px;" action="#{createPerson.createPerson()}" update="@form"/>
+        </h:form>
+    </p:dialog>
+
+    <script>
+        $(document).ready(function () {
+            PF('createPersonDlg').show();
+        });
+    </script>
+</h:body>
+</html>
