@@ -12,9 +12,8 @@
     <p:dialog id="createPersonDlg" header="Create Person" widgetVar="createPersonDlg" minHeight="40" width="800" showEffect="fade" modal="true">
         <h:form>
             <p:selectOneRadio value="#{createPerson.person.personType}" id="personsType" layout="custom">
-                <f:selectItem itemValue="PERSON_TYPE1" />
-                <f:selectItem itemValue="PERSON_TYPE2" />
-                <f:converter converterId="converter.enum"/>
+                <f:selectItem itemValue="PERSON_TYPE1"/>
+                <f:selectItem itemValue="PERSON_TYPE2"/>
             </p:selectOneRadio>
 
             <div style="display: flex; align-items: stretch;">
