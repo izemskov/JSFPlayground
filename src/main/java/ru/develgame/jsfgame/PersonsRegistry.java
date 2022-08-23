@@ -3,9 +3,11 @@ package ru.develgame.jsfgame;
 import ru.develgame.jsfgame.domain.Person;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
 
+@Named
 @ApplicationScoped
 public class PersonsRegistry {
     private Map<String, Person> persons = new HashMap<>();
