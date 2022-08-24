@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.jms.*;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,6 +55,20 @@ public class PersonsChangeListener {
             MessageConsumer consumer = session.createConsumer(topic);
             consumer.setMessageListener(messageListener);
             consumers.add(consumer);
+        } catch (JMSException e) {
+            // TODO
+        }
+    }
+
+    public void removeListener(MessageListener messageListener) {
+        try {
+            Iterator<MessageConsumer> iterator = consumers.iterator();
+            while (iterator.hasNext()) {
+                MessageConsumer next = iterator.next();
+                if (next.getMessageListener().equals(messageListener)) {
+                    iterator.remove();
+                }
+            }
         } catch (JMSException e) {
             // TODO
         }

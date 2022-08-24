@@ -2,10 +2,15 @@ package ru.develgame.jsfgame;
 
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
+import ru.develgame.jsfgame.jms.PersonsChangeListener;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.jms.Message;
+import javax.jms.MessageListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +18,30 @@ import java.util.Map;
 
 @Named("gameBean")
 @SessionScoped
-public class GameBean implements Serializable {
+public class GameBean implements Serializable, MessageListener {
     @Inject
     private Person person;
 
     @Inject
     private PersonsRegistry personsRegistry;
 
-    private List<Person> otherPersons = new ArrayList<>();
+    @Inject
+    private PersonsChangeListener personsChangeListener;
+
+    private List<Person> otherPersons;
+
+    private boolean needUpdateOtherPersonsList = false;
+
+    @PostConstruct
+    public void init() {
+        otherPersons = readOtherPersonsList();
+        personsChangeListener.addListener(this);
+    }
+
+    @PreDestroy
+    public void finite() {
+        personsChangeListener.removeListener(this);
+    }
 
     public void updatePerson() {
         updateImage();
@@ -54,14 +75,9 @@ public class GameBean implements Serializable {
     }
 
     public List<Person> getOtherPersons() {
-        // TODO - optimize that
-        otherPersons.clear();
-
-        Map<String, Person> persons = personsRegistry.getPersons();
-        for (Map.Entry<String, Person> entry : persons.entrySet()) {
-            if (!entry.getKey().equals(person.getUuid())) {
-                otherPersons.add(entry.getValue());
-            }
+        if (needUpdateOtherPersonsList) {
+            otherPersons = readOtherPersonsList();
+            needUpdateOtherPersonsList = false;
         }
 
         return otherPersons;
@@ -97,5 +113,23 @@ public class GameBean implements Serializable {
 
     public Person getPerson() {
         return person;
+    }
+
+    private List<Person> readOtherPersonsList() {
+        List<Person> res = new ArrayList<>();
+
+        Map<String, Person> persons = personsRegistry.getPersons();
+        for (Map.Entry<String, Person> entry : persons.entrySet()) {
+            if (!entry.getKey().equals(person.getUuid())) {
+                res.add(entry.getValue());
+            }
+        }
+
+        return res;
+    }
+
+    @Override
+    public void onMessage(Message message) {
+        needUpdateOtherPersonsList = true;
     }
 }
