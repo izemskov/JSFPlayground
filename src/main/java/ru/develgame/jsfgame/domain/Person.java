@@ -22,6 +22,9 @@ public class Person implements Serializable {
 
     private int imageLeft = 200;
 
+    private int height = 100;
+    private int width = 50;
+
     private Direction direction = Direction.DOWN;
 
     private PersonType personType = PersonType.PERSON_TYPE1;
@@ -70,6 +73,10 @@ public class Person implements Serializable {
     }
 
     public void setDirection(Direction direction) {
+        if (this.direction != direction) {
+            setCurrentFrame(1);
+        }
+
         this.direction = direction;
     }
 
@@ -112,5 +119,13 @@ public class Person implements Serializable {
     public String getImage() {
         return "/images/" + personType.toString() + "/walk_" + direction.toString().toLowerCase()
                 + currentFrame + ".png";
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

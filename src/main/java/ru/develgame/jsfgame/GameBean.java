@@ -65,19 +65,23 @@ public class GameBean implements Serializable, MessageListener {
 
     private void updateTopPosition() {
         if (person.isMoving()) {
-            if (person.getDirection() == Direction.DOWN && person.getImageTop() < 768)
-                person.setImageTop(person.getImageTop() + 2);
-            if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
-                person.setImageTop(person.getImageTop() - 2);
+            if (!personsRegistry.checkCollision(person)) {
+                if (person.getDirection() == Direction.DOWN && person.getImageTop() < 768)
+                    person.setImageTop(person.getImageTop() + 2);
+                if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
+                    person.setImageTop(person.getImageTop() - 2);
+            }
         }
     }
 
     private void updateLeftPosition() {
         if (person.isMoving()) {
-            if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
-                person.setImageLeft(person.getImageLeft() - 2);
-            if (person.getDirection() == Direction.RIGHT && person.getImageLeft() < 1024)
-                person.setImageLeft(person.getImageLeft() + 2);
+            if (!personsRegistry.checkCollision(person)) {
+                if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
+                    person.setImageLeft(person.getImageLeft() - 2);
+                if (person.getDirection() == Direction.RIGHT && person.getImageLeft() < 1024)
+                    person.setImageLeft(person.getImageLeft() + 2);
+            }
         }
     }
 
@@ -96,25 +100,21 @@ public class GameBean implements Serializable, MessageListener {
 
     public void left() {
         person.setDirection(Direction.LEFT);
-        person.setCurrentFrame(1);
         person.setMoving(true);
     }
 
     public void right() {
         person.setDirection(Direction.RIGHT);
-        person.setCurrentFrame(1);
         person.setMoving(true);
     }
 
     public void up() {
         person.setDirection(Direction.UP);
-        person.setCurrentFrame(1);
         person.setMoving(true);
     }
 
     public void down() {
         person.setDirection(Direction.DOWN);
-        person.setCurrentFrame(1);
         person.setMoving(true);
     }
 
