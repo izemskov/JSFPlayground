@@ -22,9 +22,6 @@ public class Person implements Serializable {
 
     private int imageLeft = 200;
 
-    private int height = 100;
-    private int width = 50;
-
     private Direction direction = Direction.DOWN;
 
     private PersonType personType = PersonType.PERSON_TYPE1;
@@ -122,10 +119,16 @@ public class Person implements Serializable {
     }
 
     public int getHeight() {
-        return height;
+        return personType.getHeight();
     }
 
     public int getWidth() {
-        return width;
+        return personType.getWidth();
+    }
+
+    public void incrementCurrentFrame() {
+        currentFrame++;
+        if (currentFrame > personType.getMaxFrame())
+            currentFrame = 1;
     }
 }

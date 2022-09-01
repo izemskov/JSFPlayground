@@ -2,7 +2,6 @@ package ru.develgame.jsfgame;
 
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
-import ru.develgame.jsfgame.domain.PersonType;
 import ru.develgame.jsfgame.jms.PersonsChangeListener;
 
 import javax.annotation.PostConstruct;
@@ -52,36 +51,24 @@ public class GameBean implements Serializable, MessageListener {
 
     private void updateImage() {
         if (person.isMoving())
-            person.setCurrentFrame(person.getCurrentFrame() + 1);
-        if (person.getPersonType() == PersonType.PERSON_TYPE3) {
-            if (person.getCurrentFrame() > 10)
-                person.setCurrentFrame(1);
-        }
-        else {
-            if (person.getCurrentFrame() > 8)
-                person.setCurrentFrame(1);
-        }
+            person.incrementCurrentFrame();
     }
 
     private void updateTopPosition() {
         if (person.isMoving()) {
-            if (!personsRegistry.checkCollision(person)) {
-                if (person.getDirection() == Direction.DOWN && person.getImageTop() < 768)
-                    person.setImageTop(person.getImageTop() + 2);
-                if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
-                    person.setImageTop(person.getImageTop() - 2);
-            }
+            if (person.getDirection() == Direction.DOWN && (person.getImageTop() + person.getHeight()) < 768)
+                person.setImageTop(person.getImageTop() + 2);
+            if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
+                person.setImageTop(person.getImageTop() - 2);
         }
     }
 
     private void updateLeftPosition() {
         if (person.isMoving()) {
-            if (!personsRegistry.checkCollision(person)) {
-                if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
-                    person.setImageLeft(person.getImageLeft() - 2);
-                if (person.getDirection() == Direction.RIGHT && person.getImageLeft() < 1024)
-                    person.setImageLeft(person.getImageLeft() + 2);
-            }
+            if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
+                person.setImageLeft(person.getImageLeft() - 2);
+            if (person.getDirection() == Direction.RIGHT && (person.getImageLeft() + person.getWidth()) < 1024)
+                person.setImageLeft(person.getImageLeft() + 2);
         }
     }
 
