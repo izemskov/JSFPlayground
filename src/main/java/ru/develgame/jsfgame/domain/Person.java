@@ -4,14 +4,14 @@ import ru.develgame.jsfgame.PersonsRegistry;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.UUID;
 
 @SessionScoped
 public class Person implements Serializable {
-    @Inject
+    @EJB
     private PersonsRegistry personsRegistry;
 
     private String uuid = UUID.randomUUID().toString();

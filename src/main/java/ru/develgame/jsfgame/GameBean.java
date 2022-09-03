@@ -1,20 +1,20 @@
 package ru.develgame.jsfgame;
 
+import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.jms.PersonsChangeListener;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Named("gameBean")
 @SessionScoped
@@ -22,11 +22,14 @@ public class GameBean implements Serializable, MessageListener {
     @Inject
     private Person person;
 
-    @Inject
+    @EJB
     private PersonsRegistry personsRegistry;
 
     @Inject
     private PersonsChangeListener personsChangeListener;
+
+    @Inject
+    private ChatBean chatBean;
 
     private List<Person> otherPersons;
 
@@ -110,20 +113,15 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     private List<Person> readOtherPersonsList() {
-        List<Person> res = new ArrayList<>();
-
-        Map<String, Person> persons = personsRegistry.getPersons();
-        for (Map.Entry<String, Person> entry : persons.entrySet()) {
-            if (!entry.getKey().equals(person.getUuid())) {
-                res.add(entry.getValue());
-            }
-        }
-
-        return res;
+        return personsRegistry.getOtherPersonsList(person.getUuid());
     }
 
     @Override
     public void onMessage(Message message) {
         needUpdateOtherPersonsList = true;
+    }
+
+    public List<ChatMessage> getChatMessages() {
+        return new LinkedList<>(chatBean.getMessages());
     }
 }

@@ -10,54 +10,77 @@
     <title>Image Test</title>
 </h:head>
 <h:body style="height: 768px; background-image: url('#{request.contextPath}/resources/images/bg1.png'); background-repeat: no-repeat;">
-    <h:panelGroup id="mainContainer" layout="block">
-        <h:form>
-            <table cellpadding="3" cellspacing="1">
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td><p:commandButton value="Up" style="width: 100px;" action="#{gameBean.up()}" update="@form"/></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><p:commandButton value="Left" style="width: 100px;" action="#{gameBean.left()}" update="@form"/></td>
-                        <td><p:commandButton value="Down" style="width: 100px;" action="#{gameBean.down()}" update="@form"/></td>
-                        <td><p:commandButton value="Right" style="width: 100px;" action="#{gameBean.right()}" update="@form"/></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><p:commandButton value="Stop" style="width: 100px;" action="#{gameBean.stop()}" update="@form"/></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tbody>
+    <tr>
+        <td width="1024" valign="top">
+            <h:panelGroup id="mainContainer" layout="block">
+                <h:form>
+                    <table cellpadding="3" cellspacing="1">
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td><p:commandButton value="Up" style="width: 100px;" action="#{gameBean.up()}" update="@form"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><p:commandButton value="Left" style="width: 100px;" action="#{gameBean.left()}" update="@form"/></td>
+                            <td><p:commandButton value="Down" style="width: 100px;" action="#{gameBean.down()}" update="@form"/></td>
+                            <td><p:commandButton value="Right" style="width: 100px;" action="#{gameBean.right()}" update="@form"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><p:commandButton value="Stop" style="width: 100px;" action="#{gameBean.stop()}" update="@form"/></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-            <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,grid,otherGrid"/>
+                    <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,grid,otherGrid"/>
 
-            <h:panelGroup layout="block"
-                          id="grid"
-                          style="width: 50px; height: 100px;
+                    <h:panelGroup layout="block"
+                                  id="grid"
+                                  style="width: 50px; height: 100px;
                                  text-align:center;
                                  position: absolute;
                                  top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
-                <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
-                <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
-            </h:panelGroup>
+                        <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
+                        <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
+                    </h:panelGroup>
 
-            <h:panelGroup layout="block" id="otherGrid">
-                <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
-                    <h:panelGroup layout="block"
-                                  id="grid#{otherPerson.uuid}"
-                                  style="width: 50px; height: 100px;
+                    <h:panelGroup layout="block" id="otherGrid">
+                        <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
+                            <h:panelGroup layout="block"
+                                          id="grid#{otherPerson.uuid}"
+                                          style="width: 50px; height: 100px;
                                   text-align:center;
                                   position: absolute;
                                   top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
-                        <p:outputLabel style="font-size: 11px; color: gold;" value="#{otherPerson.name}"/>
-                        <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
+                                <p:outputLabel style="font-size: 11px; color: gold;" value="#{otherPerson.name}"/>
+                                <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
+                            </h:panelGroup>
+                        </ui:repeat>
                     </h:panelGroup>
-                </ui:repeat>
+                </h:form>
             </h:panelGroup>
-        </h:form>
-    </h:panelGroup>
+        </td>
+        <td width="220">
+            <h:form>
+                <a4j:poll id="poll2" interval="2000" enabled="#{true}" render="poll2,chatMessagesBlock"/>
+
+                <h:panelGroup layout="block" id="chatMessagesBlock">
+                    <ui:repeat value="#{gameBean.chatMessages}" var="chatMessage">
+                        <p:fieldset width="220" legend="#{chatMessage.uuid}" style="margin-bottom: 10px;">
+                            <p class="m-0" style=" font-size: 10px;">
+                                #{chatMessage.message}
+                            </p>
+                        </p:fieldset>
+                    </ui:repeat>
+                </h:panelGroup>
+            </h:form>
+        </td>
+    </tr>
+    </tbody>
+    </table>
 </h:body>
 </html>
