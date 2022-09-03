@@ -28,7 +28,7 @@ public class GameBean implements Serializable, MessageListener {
     @Inject
     private PersonsChangeListener personsChangeListener;
 
-    @Inject
+    @EJB
     private ChatBean chatBean;
 
     private List<Person> otherPersons;
@@ -122,6 +122,6 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public List<ChatMessage> getChatMessages() {
-        return new LinkedList<>(chatBean.getMessages());
+        return chatBean.getMessages();
     }
 }

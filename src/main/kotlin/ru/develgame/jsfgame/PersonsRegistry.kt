@@ -19,7 +19,7 @@ open class PersonsRegistry {
     @Inject
     private lateinit var chatBean: ChatBean
 
-    open val persons: MutableMap<String, Person> = mutableMapOf()
+    private val persons: MutableMap<String, Person> = mutableMapOf()
 
     @Lock(WRITE)
     open fun addPerson(person: Person) {

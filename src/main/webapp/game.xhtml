@@ -70,7 +70,7 @@
 
                 <h:panelGroup layout="block" id="chatMessagesBlock">
                     <ui:repeat value="#{gameBean.chatMessages}" var="chatMessage">
-                        <p:fieldset width="220" legend="#{chatMessage.uuid}" style="margin-bottom: 10px;">
+                        <p:fieldset width="220" legend="#{chatMessage.header}" style="margin-bottom: 10px;">
                             <p class="m-0" style=" font-size: 10px;">
                                 #{chatMessage.message}
                             </p>

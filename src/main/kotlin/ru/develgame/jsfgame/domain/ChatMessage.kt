@@ -1,3 +1,3 @@
 package ru.develgame.jsfgame.domain
 
-data class ChatMessage(val uuid: String, val message: String)
+data class ChatMessage(val header: String, val message: String)
