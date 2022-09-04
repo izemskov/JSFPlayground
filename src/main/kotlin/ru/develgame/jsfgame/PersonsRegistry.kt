@@ -2,6 +2,7 @@ package ru.develgame.jsfgame
 
 import ru.develgame.jsfgame.domain.Person
 import ru.develgame.jsfgame.jms.ChangesInformer
+import ru.develgame.jsfgame.jms.MessagesType
 import javax.ejb.ConcurrencyManagement
 import javax.ejb.ConcurrencyManagementType
 import javax.ejb.Lock
@@ -25,7 +26,7 @@ open class PersonsRegistry {
     open fun addPerson(person: Person) {
         persons[person.uuid] = person
 
-        changesInformer.sendMessage()
+        changesInformer.sendMessage(MessagesType.PERSON)
 
         chatBean.personJoined(person)
     }
@@ -34,7 +35,7 @@ open class PersonsRegistry {
     open fun removePerson(person: Person) {
         persons.remove(person.uuid)
 
-        changesInformer.sendMessage()
+        changesInformer.sendMessage(MessagesType.PERSON)
     }
 
     @Lock(READ)

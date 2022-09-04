@@ -20,13 +20,13 @@ public class ChangesInformer {
     @Inject
     private Logger logger;
 
-    public void sendMessage() {
+    public void sendMessage(MessagesType messagesType) {
         try {
             try (Connection connection = connectionFactory.createConnection()) {
                 try (Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)) {
                     try (MessageProducer producer = session.createProducer(topic)) {
                         TextMessage textMessage = session.createTextMessage();
-                        textMessage.setText("Update");
+                        textMessage.setText(messagesType.toString());
 
                         producer.send(textMessage);
                     }
