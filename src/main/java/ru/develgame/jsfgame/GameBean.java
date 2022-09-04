@@ -3,7 +3,7 @@ package ru.develgame.jsfgame;
 import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
-import ru.develgame.jsfgame.jms.PersonsChangeListener;
+import ru.develgame.jsfgame.jms.ChangesListener;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -26,7 +26,7 @@ public class GameBean implements Serializable, MessageListener {
     private PersonsRegistry personsRegistry;
 
     @Inject
-    private PersonsChangeListener personsChangeListener;
+    private ChangesListener changesListener;
 
     @EJB
     private ChatBean chatBean;
@@ -38,12 +38,12 @@ public class GameBean implements Serializable, MessageListener {
     @PostConstruct
     public void init() {
         otherPersons = readOtherPersonsList();
-        personsChangeListener.addListener(this);
+        changesListener.addListener(this);
     }
 
     @PreDestroy
     public void finite() {
-        personsChangeListener.removeListener(this);
+        changesListener.removeListener(this);
     }
 
     public void updatePerson() {

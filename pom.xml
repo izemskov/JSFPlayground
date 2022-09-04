@@ -30,6 +30,7 @@
     </repositories>
 
     <dependencies>
+        <!--J2EE-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -68,6 +69,7 @@
             <version>4.5.17.Final</version>
         </dependency>
 
+        <!--Kotlin-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>

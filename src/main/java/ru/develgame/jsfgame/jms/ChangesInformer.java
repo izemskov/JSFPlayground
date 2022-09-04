@@ -2,17 +2,23 @@ package ru.develgame.jsfgame.jms;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named
 @ApplicationScoped
-public class PersonsChangeInformer {
+public class ChangesInformer {
     @Resource(lookup = "jms/JSFGameConnectionFactory")
     private ConnectionFactory connectionFactory;
 
     @Resource(lookup = "jms/JSFGameTopic")
     private Topic topic;
+
+    @Inject
+    private Logger logger;
 
     public void sendMessage() {
         try {
@@ -27,7 +33,7 @@ public class PersonsChangeInformer {
                 }
             }
         } catch (JMSException e) {
-            // TODO
+            logger.log(Level.SEVERE, "Cannot send JMS message", e);
         }
     }
 }
