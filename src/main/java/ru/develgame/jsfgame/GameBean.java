@@ -4,6 +4,7 @@ import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesListener;
+import ru.develgame.jsfgame.jms.MessagesType;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -11,10 +12,14 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 import java.io.Serializable;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named("gameBean")
 @SessionScoped
@@ -31,13 +36,19 @@ public class GameBean implements Serializable, MessageListener {
     @EJB
     private ChatBean chatBean;
 
+    @Inject
+    private transient Logger logger;
+
     private List<Person> otherPersons;
+    private List<ChatMessage> chatMessages;
 
     private boolean needUpdateOtherPersonsList = false;
+    private boolean needUpdateChatMessages = false;
 
     @PostConstruct
     public void init() {
         otherPersons = readOtherPersonsList();
+        chatMessages = readChatMessages();
         changesListener.addListener(this);
     }
 
@@ -118,10 +129,26 @@ public class GameBean implements Serializable, MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        needUpdateOtherPersonsList = true;
+        try {
+            if (((TextMessage) message).getText().equals(MessagesType.PERSON.toString()))
+                needUpdateOtherPersonsList = true;
+            else
+                needUpdateChatMessages = true;
+        } catch (JMSException e) {
+            logger.log(Level.SEVERE, "Cannot get JMS message", e);
+        }
+    }
+
+    private List<ChatMessage> readChatMessages() {
+        return chatBean.getMessages();
     }
 
     public List<ChatMessage> getChatMessages() {
-        return chatBean.getMessages();
+        if (needUpdateChatMessages) {
+            chatMessages = readChatMessages();
+            needUpdateChatMessages = false;
+        }
+
+        return chatMessages;
     }
 }

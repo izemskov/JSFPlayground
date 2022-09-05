@@ -2,11 +2,17 @@ package ru.develgame.jsfgame
 
 import ru.develgame.jsfgame.domain.ChatMessage
 import ru.develgame.jsfgame.domain.Person
+import ru.develgame.jsfgame.jms.ChangesInformer
+import ru.develgame.jsfgame.jms.MessagesType
 import javax.ejb.*
+import javax.inject.Inject
 
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 open class ChatBean {
+    @Inject
+    private lateinit var changesInformer: ChangesInformer
+
     private val messages = mutableListOf<ChatMessage>()
 
     @Lock(LockType.WRITE)
@@ -19,6 +25,8 @@ open class ChatBean {
         if (messages.size > MAX_MESSAGES_COUNT) {
             messages.removeAt(0)
         }
+
+        changesInformer.sendMessage(MessagesType.CHAT)
     }
 
     @Lock(LockType.READ)
