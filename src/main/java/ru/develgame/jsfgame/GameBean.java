@@ -45,6 +45,8 @@ public class GameBean implements Serializable, MessageListener {
     private boolean needUpdateOtherPersonsList = false;
     private boolean needUpdateChatMessages = false;
 
+    private String chatMessage;
+
     @PostConstruct
     public void init() {
         otherPersons = readOtherPersonsList();
@@ -150,5 +152,19 @@ public class GameBean implements Serializable, MessageListener {
         }
 
         return chatMessages;
+    }
+
+    public String getChatMessage() {
+        return chatMessage;
+    }
+
+    public void setChatMessage(String chatMessage) {
+        this.chatMessage = chatMessage;
+    }
+
+    public void sendChatMessage() {
+        if (chatMessage != null && !chatMessage.isEmpty()) {
+            chatBean.addMessage(person.getName(), chatMessage);
+        }
     }
 }
