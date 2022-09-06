@@ -60,32 +60,9 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void updatePerson() {
-        updateImage();
-        updateTopPosition();
-        updateLeftPosition();
-    }
-
-    private void updateImage() {
-        if (person.isMoving())
-            person.incrementCurrentFrame();
-    }
-
-    private void updateTopPosition() {
-        if (person.isMoving()) {
-            if (person.getDirection() == Direction.DOWN && (person.getImageTop() + person.getHeight()) < 768)
-                person.setImageTop(person.getImageTop() + 2);
-            if (person.getDirection() == Direction.UP && person.getImageTop() > 0)
-                person.setImageTop(person.getImageTop() - 2);
-        }
-    }
-
-    private void updateLeftPosition() {
-        if (person.isMoving()) {
-            if (person.getDirection() == Direction.LEFT && person.getImageLeft() > 0)
-                person.setImageLeft(person.getImageLeft() - 2);
-            if (person.getDirection() == Direction.RIGHT && (person.getImageLeft() + person.getWidth()) < 1024)
-                person.setImageLeft(person.getImageLeft() + 2);
-        }
+        person.updateImage();
+        person.updateTopPosition();
+        person.updateLeftPosition();
     }
 
     public List<Person> getOtherPersons() {
