@@ -33,7 +33,7 @@ open class ChatBean {
     open fun getMessages(): List<ChatMessage> = messages.toList()
 
     open fun personJoined(person: Person) {
-        addMessage(person.uuid, "Person ${person.uuid} joined")
+        addMessage(person.name, "Person ${person.name} joined")
     }
 
     companion object {

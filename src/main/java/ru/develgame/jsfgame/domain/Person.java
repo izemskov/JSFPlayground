@@ -1,6 +1,7 @@
 package ru.develgame.jsfgame.domain;
 
 import ru.develgame.jsfgame.PersonsRegistry;
+import ru.develgame.jsfgame.utils.NameGenUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -15,6 +16,9 @@ import java.util.UUID;
 public class Person implements Serializable {
     @EJB
     private PersonsRegistry personsRegistry;
+
+    @EJB
+    private NameGenUtil nameGenUtil;
 
     private String uuid = UUID.randomUUID().toString();
 
@@ -35,7 +39,7 @@ public class Person implements Serializable {
     @PostConstruct
     public void init() {
         personsRegistry.addPerson(this);
-        name = uuid;
+        name = nameGenUtil.getName();
     }
 
     @PreDestroy

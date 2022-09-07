@@ -1,7 +1,8 @@
 package ru.develgame.jsfgame
 
-import ru.develgame.jsfgame.domain.Person
+import ru.develgame.jsfgame.player.PlayerBean
 import java.io.Serializable
+import javax.ejb.EJB
 import javax.enterprise.context.SessionScoped
 import javax.inject.Inject
 import javax.inject.Named
@@ -10,13 +11,18 @@ import javax.inject.Named
 @SessionScoped
 open class CreatePersonBean : Serializable {
     @Inject
-    private lateinit var person: Person
+    private lateinit var playerBean: PlayerBean
 
-    open fun getPerson() = person
+    @EJB
+    private lateinit var chatBean: ChatBean
+
+    open fun getPerson() = playerBean.getPerson()
 
     open fun createPerson(): String {
-        if (person.name.isNullOrEmpty())
-            person.name = person.uuid
+        if (playerBean.getPerson().name.isNullOrEmpty())
+            playerBean.getPerson().name = playerBean.getPerson().uuid
+
+        chatBean.personJoined(playerBean.getPerson())
 
         return "GAME"
     }

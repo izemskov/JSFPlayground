@@ -5,6 +5,7 @@ import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesListener;
 import ru.develgame.jsfgame.jms.MessagesType;
+import ru.develgame.jsfgame.player.PlayerBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class GameBean implements Serializable, MessageListener {
     @Inject
-    private Person person;
+    private PlayerBean playerBean;
 
     @EJB
     private PersonsRegistry personsRegistry;
@@ -60,9 +61,9 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void updatePerson() {
-        person.updateImage();
-        person.updateTopPosition();
-        person.updateLeftPosition();
+        playerBean.getPerson().updateImage();
+        playerBean.getPerson().updateTopPosition();
+        playerBean.getPerson().updateLeftPosition();
     }
 
     public List<Person> getOtherPersons() {
@@ -75,35 +76,35 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void stop() {
-        person.setMoving(false);
+        playerBean.getPerson().setMoving(false);
     }
 
     public void left() {
-        person.setDirection(Direction.LEFT);
-        person.setMoving(true);
+        playerBean.getPerson().setDirection(Direction.LEFT);
+        playerBean.getPerson().setMoving(true);
     }
 
     public void right() {
-        person.setDirection(Direction.RIGHT);
-        person.setMoving(true);
+        playerBean.getPerson().setDirection(Direction.RIGHT);
+        playerBean.getPerson().setMoving(true);
     }
 
     public void up() {
-        person.setDirection(Direction.UP);
-        person.setMoving(true);
+        playerBean.getPerson().setDirection(Direction.UP);
+        playerBean.getPerson().setMoving(true);
     }
 
     public void down() {
-        person.setDirection(Direction.DOWN);
-        person.setMoving(true);
+        playerBean.getPerson().setDirection(Direction.DOWN);
+        playerBean.getPerson().setMoving(true);
     }
 
     public Person getPerson() {
-        return person;
+        return playerBean.getPerson();
     }
 
     private List<Person> readOtherPersonsList() {
-        return personsRegistry.getOtherPersonsList(person.getUuid());
+        return personsRegistry.getOtherPersonsList(playerBean.getPerson().getUuid());
     }
 
     @Override
@@ -141,7 +142,7 @@ public class GameBean implements Serializable, MessageListener {
 
     public void sendChatMessage() {
         if (chatMessage != null && !chatMessage.isEmpty()) {
-            chatBean.addMessage(person.getName(), chatMessage);
+            chatBean.addMessage(playerBean.getPerson().getName(), chatMessage);
         }
     }
 }

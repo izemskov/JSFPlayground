@@ -17,9 +17,6 @@ open class PersonsRegistry {
     @Inject
     private lateinit var changesInformer: ChangesInformer
 
-    @Inject
-    private lateinit var chatBean: ChatBean
-
     private val persons: MutableMap<String, Person> = mutableMapOf()
 
     @Lock(WRITE)
@@ -27,8 +24,6 @@ open class PersonsRegistry {
         persons[person.uuid] = person
 
         changesInformer.sendMessage(MessagesType.PERSON)
-
-        chatBean.personJoined(person)
     }
 
     @Lock(WRITE)
