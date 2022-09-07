@@ -49,7 +49,7 @@ public class MonsterBean implements MessageListener {
     @PostConstruct
     public void init() {
         monster.setPersonType(PersonType.PERSON_TYPE4);
-        monster.setImageLeft(500);
+        monster.setImageLeft(800);
         monster.setImageTop(500);
 
         otherPersons = readOtherPersonsList();

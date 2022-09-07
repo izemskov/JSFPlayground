@@ -10,6 +10,7 @@ import javax.inject.Inject;
  */
 @Singleton
 @Startup
+@LocalBean
 public class MonsterMover {
     @Inject
     private MonsterBean monsterBean;
@@ -19,7 +20,7 @@ public class MonsterMover {
 
     @PostConstruct
     public void initialize() {
-        timerService.createTimer( 200, "");
+        timerService.createTimer(1000, 200, "Interval");
     }
 
     @Timeout
