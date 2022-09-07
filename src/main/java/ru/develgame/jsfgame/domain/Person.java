@@ -5,30 +5,32 @@ import ru.develgame.jsfgame.PersonsRegistry;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.UUID;
 
-@SessionScoped
+@Dependent
 public class Person implements Serializable {
     @EJB
     private PersonsRegistry personsRegistry;
 
     private String uuid = UUID.randomUUID().toString();
 
-    private int currentFrame = 1;
+    protected int currentFrame = 1;
 
-    private int imageTop = 200;
+    protected int imageTop = 200;
 
-    private int imageLeft = 200;
+    protected int imageLeft = 200;
 
-    private Direction direction = Direction.DOWN;
+    protected Direction direction = Direction.DOWN;
 
-    private PersonType personType = PersonType.PERSON_TYPE1;
+    protected PersonType personType = PersonType.PERSON_TYPE1;
 
-    private boolean moving = false;
+    protected boolean moving = false;
 
-    private String name;
+    protected String name;
 
     @PostConstruct
     public void init() {
@@ -130,5 +132,28 @@ public class Person implements Serializable {
         currentFrame++;
         if (currentFrame > personType.getMaxFrame())
             currentFrame = 1;
+    }
+
+    public void updateImage() {
+        if (isMoving())
+            incrementCurrentFrame();
+    }
+
+    public void updateTopPosition() {
+        if (isMoving()) {
+            if (getDirection() == Direction.DOWN && (getImageTop() + getHeight()) < 768)
+                setImageTop(getImageTop() + 2);
+            if (getDirection() == Direction.UP && getImageTop() > 0)
+                setImageTop(getImageTop() - 2);
+        }
+    }
+
+    public void updateLeftPosition() {
+        if (isMoving()) {
+            if (getDirection() == Direction.LEFT && getImageLeft() > 0)
+                setImageLeft(getImageLeft() - 2);
+            if (getDirection() == Direction.RIGHT && (getImageLeft() + getWidth()) < 1024)
+                setImageLeft(getImageLeft() + 2);
+        }
     }
 }

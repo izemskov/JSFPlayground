@@ -3,7 +3,8 @@ package ru.develgame.jsfgame.domain;
 public enum PersonType {
     PERSON_TYPE1(100, 50, 8),
     PERSON_TYPE2(100, 50, 8),
-    PERSON_TYPE3(40, 40, 10);
+    PERSON_TYPE3(40, 40, 10),
+    PERSON_TYPE4(60, 80, 4);
 
     private final int width;
     private final int height;
