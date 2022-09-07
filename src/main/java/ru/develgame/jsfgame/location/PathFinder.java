@@ -11,7 +11,7 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class PathFinder {
-    public Direction getNextStep(int srcX, int srcY, int dstX, int dstY) {
+    public Direction getNextDirection(int srcX, int srcY, int dstX, int dstY) {
         if (Math.abs(dstY - srcY) > Math.abs(dstX - srcX)) {
             if (dstY > srcY)
                 return Direction.DOWN;
