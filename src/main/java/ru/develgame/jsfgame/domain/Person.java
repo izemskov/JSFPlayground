@@ -7,9 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Random;
 import java.util.UUID;
 
 @Dependent
@@ -26,7 +25,7 @@ public class Person implements Serializable {
 
     protected int imageTop = 200;
 
-    protected int imageLeft = 200;
+    protected int imageLeft = new Random().nextInt(1024);
 
     protected Direction direction = Direction.DOWN;
 
