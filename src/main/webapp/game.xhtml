@@ -40,10 +40,10 @@
 
                     <h:panelGroup layout="block"
                                   id="grid"
-                                  style="width: 50px; height: 100px;
-                                 text-align:center;
-                                 position: absolute;
-                                 top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
+                                  style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
+                                         text-align:center;
+                                         position: absolute;
+                                         top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
                         <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
                         <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
                     </h:panelGroup>
@@ -52,7 +52,7 @@
                         <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
                             <h:panelGroup layout="block"
                                           id="grid#{otherPerson.uuid}"
-                                          style="width: 50px; height: 100px;
+                                          style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
                                                  text-align:center;
                                                  position: absolute;
                                                  top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
