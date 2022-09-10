@@ -6,6 +6,7 @@ import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.domain.PersonType;
 import ru.develgame.jsfgame.jms.ChangesListener;
 import ru.develgame.jsfgame.jms.MessagesType;
+import ru.develgame.jsfgame.location.CollisionsDetector;
 import ru.develgame.jsfgame.location.PathFinder;
 
 import javax.annotation.PostConstruct;
@@ -43,6 +44,9 @@ public class MonsterBean implements MessageListener {
     @Inject
     private Person monster;
 
+    @Inject
+    private CollisionsDetector collisionsDetector;
+
     private List<Person> otherPersons;
 
     private boolean needUpdateOtherPersonsList = false;
@@ -66,11 +70,17 @@ public class MonsterBean implements MessageListener {
         if (!getOtherPersons().isEmpty()) {
             Person target = otherPersons.get(otherPersons.size() - 1);
 
-            Direction nextDirection = pathFinder.getNextDirection(monster.getImageLeft(), monster.getImageTop(),
-                    target.getImageLeft(), target.getImageTop());
-            if (nextDirection != monster.getDirection() && monster.getCurrentFrame() == PersonType.PERSON_TYPE4.getMaxFrame())
-                monster.setDirection(nextDirection);
-            monster.setMoving(true);
+            // Check collision
+            if (collisionsDetector.checkCollision(monster, target)) {
+                monster.setMoving(false);
+            }
+            else {
+                Direction nextDirection = pathFinder.getNextDirection(monster.getImageLeft(), monster.getImageTop(),
+                        target.getImageLeft(), target.getImageTop());
+                if (nextDirection != monster.getDirection() && monster.getCurrentFrame() == PersonType.PERSON_TYPE4.getMaxFrame())
+                    monster.setDirection(nextDirection);
+                monster.setMoving(true);
+            }
         }
         else
             monster.setMoving(false);
