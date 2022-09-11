@@ -1,6 +1,7 @@
 package ru.develgame.jsfgame.ai;
 
 import ru.develgame.jsfgame.PersonsRegistry;
+import ru.develgame.jsfgame.domain.Action;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.domain.PersonType;
@@ -72,18 +73,18 @@ public class MonsterBean implements MessageListener {
 
             // Check collision
             if (collisionsDetector.checkCollision(monster, target)) {
-                monster.setMoving(false);
+                monster.setAction(Action.ATTACK);
             }
             else {
                 Direction nextDirection = pathFinder.getNextDirection(monster.getImageLeft(), monster.getImageTop(),
                         target.getImageLeft(), target.getImageTop());
                 if (nextDirection != monster.getDirection() && monster.getCurrentFrame() == PersonType.PERSON_TYPE4.getMaxFrame())
                     monster.setDirection(nextDirection);
-                monster.setMoving(true);
+                monster.setAction(Action.WALK);
             }
         }
         else
-            monster.setMoving(false);
+            monster.setAction(Action.NONE);
 
         monster.updateImage();
         monster.updateTopPosition();

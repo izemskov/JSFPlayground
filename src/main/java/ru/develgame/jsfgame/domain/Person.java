@@ -31,7 +31,7 @@ public class Person implements Serializable {
 
     protected PersonType personType = PersonType.PERSON_TYPE1;
 
-    protected boolean moving = false;
+    protected Action action = Action.NONE;
 
     protected String name;
 
@@ -82,14 +82,6 @@ public class Person implements Serializable {
         this.direction = direction;
     }
 
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
     public PersonType getPersonType() {
         return personType;
     }
@@ -119,7 +111,13 @@ public class Person implements Serializable {
     }
 
     public String getImage() {
-        return "/images/" + personType.toString() + "/walk_" + direction.toString().toLowerCase()
+        Action currentAction = action;
+        if (currentAction == Action.NONE)
+            currentAction = Action.WALK;
+
+        return "/images/" + personType.toString() + "/"
+                + currentAction.toString().toLowerCase() + "_"
+                + direction.toString().toLowerCase()
                 + currentFrame + ".png";
     }
 
@@ -132,18 +130,22 @@ public class Person implements Serializable {
     }
 
     public void incrementCurrentFrame() {
+        int maxFrame = personType.getMaxFrame();
+        if (action == Action.ATTACK)
+            maxFrame = personType.getMaxAttackFrame();
+
         currentFrame++;
-        if (currentFrame > personType.getMaxFrame())
+        if (currentFrame > maxFrame)
             currentFrame = 1;
     }
 
     public void updateImage() {
-        if (isMoving())
+        if (action != Action.NONE)
             incrementCurrentFrame();
     }
 
     public void updateTopPosition() {
-        if (isMoving()) {
+        if (action == Action.WALK) {
             if (getDirection() == Direction.DOWN && (getImageTop() + getHeight()) < 768)
                 setImageTop(getImageTop() + 2);
             if (getDirection() == Direction.UP && getImageTop() > 0)
@@ -152,11 +154,21 @@ public class Person implements Serializable {
     }
 
     public void updateLeftPosition() {
-        if (isMoving()) {
+        if (action == Action.WALK) {
             if (getDirection() == Direction.LEFT && getImageLeft() > 0)
                 setImageLeft(getImageLeft() - 2);
             if (getDirection() == Direction.RIGHT && (getImageLeft() + getWidth()) < 1024)
                 setImageLeft(getImageLeft() + 2);
         }
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        if ((this.action == Action.WALK && action == Action.ATTACK) || (this.action == Action.ATTACK && action == Action.WALK))
+            setCurrentFrame(1);
+        this.action = action;
     }
 }
