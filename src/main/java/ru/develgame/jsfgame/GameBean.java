@@ -1,5 +1,6 @@
 package ru.develgame.jsfgame;
 
+import ru.develgame.jsfgame.domain.Action;
 import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
@@ -76,27 +77,27 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void stop() {
-        playerBean.getPerson().setMoving(false);
+        playerBean.getPerson().setAction(Action.NONE);
     }
 
     public void left() {
         playerBean.getPerson().setDirection(Direction.LEFT);
-        playerBean.getPerson().setMoving(true);
+        playerBean.getPerson().setAction(Action.WALK);
     }
 
     public void right() {
         playerBean.getPerson().setDirection(Direction.RIGHT);
-        playerBean.getPerson().setMoving(true);
+        playerBean.getPerson().setAction(Action.WALK);
     }
 
     public void up() {
         playerBean.getPerson().setDirection(Direction.UP);
-        playerBean.getPerson().setMoving(true);
+        playerBean.getPerson().setAction(Action.WALK);
     }
 
     public void down() {
         playerBean.getPerson().setDirection(Direction.DOWN);
-        playerBean.getPerson().setMoving(true);
+        playerBean.getPerson().setAction(Action.WALK);
     }
 
     public Person getPerson() {
