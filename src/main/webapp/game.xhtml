@@ -9,32 +9,14 @@
 <h:head>
     <title>Image Test</title>
 </h:head>
-<h:body style="height: 768px; background-image: url('#{request.contextPath}/resources/images/bg1.png'); background-repeat: no-repeat;">
+<h:body>
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
     <tbody>
     <tr>
         <td width="1024" valign="top">
-            <h:panelGroup id="mainContainer" layout="block">
+            <p:scrollPanel mode="native" id="mainContainer" style="width: 400px; height: 400px;">
                 <h:form>
-                    <table cellpadding="3" cellspacing="1">
-                        <tbody>
-                        <tr>
-                            <td></td>
-                            <td><p:commandButton value="Up" style="width: 100px;" action="#{gameBean.up()}" update="@form"/></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><p:commandButton value="Left" style="width: 100px;" action="#{gameBean.left()}" update="@form"/></td>
-                            <td><p:commandButton value="Down" style="width: 100px;" action="#{gameBean.down()}" update="@form"/></td>
-                            <td><p:commandButton value="Right" style="width: 100px;" action="#{gameBean.right()}" update="@form"/></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><p:commandButton value="Stop" style="width: 100px;" action="#{gameBean.stop()}" update="@form"/></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <h:panelGroup layout="block" style="width: 1024px; height: 768px; background-image: url('#{request.contextPath}/resources/images/bg1.png'); background-repeat: no-repeat;">
 
                     <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,grid,otherGrid"/>
 
@@ -61,38 +43,42 @@
                             </h:panelGroup>
                         </ui:repeat>
                     </h:panelGroup>
+
+                    </h:panelGroup>
                 </h:form>
-            </h:panelGroup>
+            </p:scrollPanel>
         </td>
         <td width="220">
-            <h:form>
-                <a4j:poll id="poll2" interval="2000" enabled="#{true}" render="poll2,chatMessagesBlock"/>
+            <p:scrollPanel layout="block">
+                <h:form>
+                    <a4j:poll id="poll2" interval="2000" enabled="#{true}" render="poll2,chatMessagesBlock"/>
 
-                <h:panelGroup layout="block" id="chatMessagesBlock">
-                    <ui:repeat value="#{gameBean.chatMessages}" var="chatMessage">
-                        <p:fieldset width="220" legend="#{chatMessage.header}" style="margin-bottom: 10px;">
-                            <p class="m-0" style=" font-size: 10px;">
-                                #{chatMessage.message}
-                            </p>
-                        </p:fieldset>
-                    </ui:repeat>
-                </h:panelGroup>
+                    <h:panelGroup layout="block" id="chatMessagesBlock">
+                        <ui:repeat value="#{gameBean.chatMessages}" var="chatMessage">
+                            <p:fieldset width="220" legend="#{chatMessage.header}" style="margin-bottom: 10px;">
+                                <p class="m-0" style=" font-size: 10px;">
+                                    #{chatMessage.message}
+                                </p>
+                            </p:fieldset>
+                        </ui:repeat>
+                    </h:panelGroup>
 
-                <h:panelGroup layout="block" rendered="#{false}">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <p:inputText id="textMessage" value="#{gameBean.chatMessage}"/>
-                            </td>
-                            <td style="padding-left: 5px;">
-                                <p:commandButton actionListener="#{gameBean.sendChatMessage()}" icon="pi pi-send" />
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </h:panelGroup>
-            </h:form>
+                    <h:panelGroup layout="block" rendered="#{false}">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <p:inputText id="textMessage" value="#{gameBean.chatMessage}"/>
+                                </td>
+                                <td style="padding-left: 5px;">
+                                    <p:commandButton actionListener="#{gameBean.sendChatMessage()}" icon="pi pi-send" />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </h:panelGroup>
+                </h:form>
+            </p:scrollPanel>
         </td>
     </tr>
     </tbody>

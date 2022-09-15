@@ -35,6 +35,7 @@ open class PersonsRegistry {
 
     @Lock(READ)
     open fun getOtherPersonsList(uuid: String): MutableList<Person> {
+        // TODO - Mutable list return -> simple List
         val res: MutableList<Person> = mutableListOf()
 
         for (entry in persons.entries) {
