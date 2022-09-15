@@ -3,36 +3,33 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:p="http://primefaces.org/ui">
-   <p:scrollPanel mode="native" id="mainContainer" styleClass="mainContainer">
-      <h:form>
-         <h:panelGroup layout="block" style="width: 1024px; height: 768px; background-image: url('#{request.contextPath}/resources/images/bg1.png'); background-repeat: no-repeat;">
+    <p:scrollPanel mode="native" id="mainContainer" styleClass="mainContainer">
+        <h:form>
+            <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,location"/>
 
-            <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,grid,otherGrid"/>
-
-            <h:panelGroup layout="block"
-                          id="grid"
-                          style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
+            <h:panelGroup layout="block" id="location" styleClass="location">
+                <h:panelGroup layout="block"
+                              id="player"
+                              style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
                                          text-align: center;
                                          position: relative;
                                          top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
-               <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
-               <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
-            </h:panelGroup>
+                    <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
+                    <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
+                </h:panelGroup>
 
-            <h:panelGroup layout="block" id="otherGrid">
-               <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
-                  <h:panelGroup layout="block"
-                                id="grid#{otherPerson.uuid}"
-                                style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
-                                                 text-align: center;
-                                                 position: relative;
-                                                 top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
-                     <p:outputLabel style="font-size: 11px; color: gold;" value="#{otherPerson.name}"/>
-                     <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
-                  </h:panelGroup>
-               </ui:repeat>
+                <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
+                    <h:panelGroup layout="block"
+                                  id="enemy#{otherPerson.uuid}"
+                                  style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
+                                              text-align: center;
+                                              position: relative;
+                                              top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
+                        <p:outputLabel style="font-size: 11px; color: gold;" value="#{otherPerson.name}"/>
+                        <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
+                    </h:panelGroup>
+                </ui:repeat>
             </h:panelGroup>
-         </h:panelGroup>
-      </h:form>
-   </p:scrollPanel>
+        </h:form>
+    </p:scrollPanel>
 </ui:composition>
