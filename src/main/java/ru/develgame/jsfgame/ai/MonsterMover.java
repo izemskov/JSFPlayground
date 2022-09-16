@@ -10,7 +10,6 @@ import javax.inject.Inject;
  */
 @Singleton
 @Startup
-@LocalBean
 public class MonsterMover {
     @Inject
     private MonsterBean monsterBean;

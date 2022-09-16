@@ -1,0 +1,29 @@
+.mainContainer {
+    width: 1920px;
+    height: 1080px;
+}
+
+.location1 {
+    width: 1920px;
+    height: 1080px;
+    background-image: url(#{resource['images/bg2.png']});
+    background-repeat: repeat;
+}
+
+.location2 {
+    width: 1024px;
+    height: 768px;
+    background-image: url(#{resource['images/bg1.png']});
+    background-repeat: no-repeat;
+}
+
+.playerName {
+    font-size: 11px !important;
+    font-weight: bold;
+    color: gold;
+}
+
+.enemyName {
+    font-size: 11px !important;
+    color: gold;
+}
