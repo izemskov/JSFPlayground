@@ -3,7 +3,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:p="http://primefaces.org/ui">
-    <p:scrollPanel mode="native" id="mainContainer" styleClass="mainContainer">
+    <h:panelGroup layout="block" id="mainContainer" styleClass="mainContainer">
         <h:form>
             <a4j:poll id="poll" interval="100" enabled="#{true}" actionListener="#{gameBean.updatePerson()}" render="poll,location"/>
 
@@ -12,9 +12,9 @@
                               id="player"
                               style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
                                          text-align: center;
-                                         position: relative;
+                                         position: absolute;
                                          top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
-                    <p:outputLabel style="font-size: 11px; font-weight: bold; color: gold;" value="#{gameBean.person.name}"/>
+                    <p:outputLabel styleClass="playerName" value="#{gameBean.person.name}"/>
                     <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
                 </h:panelGroup>
 
@@ -23,13 +23,13 @@
                                   id="enemy#{otherPerson.uuid}"
                                   style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
                                               text-align: center;
-                                              position: relative;
+                                              position: absolute;
                                               top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
-                        <p:outputLabel style="font-size: 11px; color: gold;" value="#{otherPerson.name}"/>
+                        <p:outputLabel styleClass="enemyName" value="#{otherPerson.name}"/>
                         <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
                     </h:panelGroup>
                 </ui:repeat>
             </h:panelGroup>
         </h:form>
-    </p:scrollPanel>
+    </h:panelGroup>
 </ui:composition>

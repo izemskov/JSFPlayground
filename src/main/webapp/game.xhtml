@@ -10,15 +10,19 @@
     <title>JSF Game</title>
     <h:outputStylesheet name="css/styles.css"/>
 </h:head>
-<h:body>
+<h:body style="margin: 0;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
     <tbody>
     <tr>
         <td width="1024" valign="top">
-            <ui:include src="/WEB-INF/blocks/gameBlock.xhtml"/>
+            <iframe src="#{request.contextPath}/location.xhtml"
+                    sandbox="allow-same-origin || allow-top-navigation || allow-forms || allow-scripts"
+                    style="border: none;"
+                    width="1024"
+                    height="768"/>
         </td>
-        <td width="220">
-            <p:scrollPanel layout="block">
+        <td width="220" valign="top">
+            <h:panelGroup layout="block" >
                 <h:form>
                     <a4j:poll id="poll2" interval="2000" enabled="#{true}" render="poll2,chatMessagesBlock"/>
 
@@ -47,7 +51,7 @@
                         </table>
                     </h:panelGroup>
                 </h:form>
-            </p:scrollPanel>
+            </h:panelGroup>
         </td>
     </tr>
     </tbody>

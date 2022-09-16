@@ -1,5 +1,5 @@
 .mainContainer {
-    width: 400px; height: 400px;
+    width: 1024px; height: 768px;
 }
 
 .location {
@@ -7,4 +7,15 @@
     height: 768px;
     background-image: url(#{resource['images/bg1.png']});
     background-repeat: no-repeat;
+}
+
+.playerName {
+    font-size: 11px !important;
+    font-weight: bold;
+    color: gold;
+}
+
+.enemyName {
+    font-size: 11px !important;
+    color: gold;
 }
