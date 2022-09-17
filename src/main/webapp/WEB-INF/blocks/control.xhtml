@@ -23,6 +23,16 @@
                 </tr>
                 </tbody>
             </table>
+
+            <p:hotkey bind="right" update="@form" actionListener="#{gameBean.right()}"/>
+            <p:hotkey bind="left" update="@form" actionListener="#{gameBean.left()}"/>
+            <p:hotkey bind="up" update="@form" actionListener="#{gameBean.up()}"/>
+            <p:hotkey bind="down" update="@form" actionListener="#{gameBean.down()}"/>
+            <p:hotkey bind="d" update="@form" actionListener="#{gameBean.right()}"/>
+            <p:hotkey bind="a" update="@form" actionListener="#{gameBean.left()}"/>
+            <p:hotkey bind="w" update="@form" actionListener="#{gameBean.up()}"/>
+            <p:hotkey bind="s" update="@form" actionListener="#{gameBean.down()}"/>
+            <p:hotkey bind="space" update="@form" actionListener="#{gameBean.stop()}"/>
         </h:form>
     </p:tab>
 </ui:composition>
