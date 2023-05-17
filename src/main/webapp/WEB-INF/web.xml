@@ -33,4 +33,17 @@
         <auth-method>BASIC</auth-method>
         <realm-name>file</realm-name>
     </login-config>
+
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
 </web-app>
