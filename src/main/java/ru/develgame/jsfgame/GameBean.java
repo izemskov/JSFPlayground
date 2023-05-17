@@ -49,6 +49,8 @@ public class GameBean implements Serializable, MessageListener {
 
     private String chatMessage;
 
+    private static final long serialVersionUID = -347847984647877844L;
+
     @PostConstruct
     public void init() {
         otherPersons = readOtherPersonsList();

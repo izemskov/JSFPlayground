@@ -35,6 +35,8 @@ public class Person implements Serializable {
 
     protected String name;
 
+    private static final long serialVersionUID = -4004510546941410977L;
+
     @PostConstruct
     public void init() {
         personsRegistry.addPerson(this);
