@@ -65,6 +65,14 @@
         <error-code>500</error-code>
         <location>/error500.xhtml</location>
     </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/errorExpired.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/errorExpired.xhtml</location>
+    </error-page>
 
     <session-config>
         <session-timeout>30</session-timeout>

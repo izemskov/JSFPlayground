@@ -33,4 +33,8 @@ public class CreatePersonBean implements Serializable {
 
         return "GAME";
     }
+
+    public String chatRoom() {
+        throw new RuntimeException("Test");
+    }
 }

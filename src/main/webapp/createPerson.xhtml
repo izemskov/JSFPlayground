@@ -9,59 +9,71 @@
     <title>Image Test</title>
 </h:head>
 <h:body>
-    <p:dialog id="createPersonDlg" header="Create Person" widgetVar="createPersonDlg" minHeight="40" width="800" showEffect="fade" modal="true">
-        <h:form>
-            <p:selectOneRadio value="#{createPerson.person.personType}" id="personsType" layout="custom">
-                <f:selectItem itemValue="PERSON_TYPE1"/>
-                <f:selectItem itemValue="PERSON_TYPE2"/>
-                <f:selectItem itemValue="PERSON_TYPE3"/>
-            </p:selectOneRadio>
+    <p:dialog id="createPersonDlg" header="Create Person" widgetVar="createPersonDlg" minHeight="40" width="800" showEffect="fade" modal="true" closable="false">
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <h:form>
+                        <p:selectOneRadio value="#{createPerson.person.personType}" id="personsType" layout="custom">
+                            <f:selectItem itemValue="PERSON_TYPE1"/>
+                            <f:selectItem itemValue="PERSON_TYPE2"/>
+                            <f:selectItem itemValue="PERSON_TYPE3"/>
+                        </p:selectOneRadio>
 
-            <div style="display: flex; align-items: stretch;">
-                <p:panel header="Person1" style="margin-right: 20px">
-                    <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
-                        <tbody>
-                        <tr>
-                            <td valign="middle"><p:radioButton id="personType1" for="personsType" itemIndex="0"/></td>
-                            <td><p:graphicImage name="/images/PERSON_TYPE1/walk_down1.png" style="margin-left: 30px;"/></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </p:panel>
+                        <div style="display: flex; align-items: stretch;">
+                            <p:panel header="Person1" style="margin-right: 20px">
+                                <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
+                                    <tbody>
+                                    <tr>
+                                        <td valign="middle"><p:radioButton id="personType1" for="personsType" itemIndex="0"/></td>
+                                        <td><p:graphicImage name="/images/PERSON_TYPE1/walk_down1.png" style="margin-left: 30px;"/></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </p:panel>
 
-                <p:panel header="Person2" style="margin-right: 20px">
-                    <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
-                        <tbody>
-                        <tr>
-                            <td valign="middle"><p:radioButton id="personType2" for="personsType" itemIndex="1"/></td>
-                            <td><p:graphicImage name="/images/PERSON_TYPE2/walk_down1.png" style="margin-left: 30px;"/></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </p:panel>
+                            <p:panel header="Person2" style="margin-right: 20px">
+                                <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
+                                    <tbody>
+                                    <tr>
+                                        <td valign="middle"><p:radioButton id="personType2" for="personsType" itemIndex="1"/></td>
+                                        <td><p:graphicImage name="/images/PERSON_TYPE2/walk_down1.png" style="margin-left: 30px;"/></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </p:panel>
 
-                <p:panel header="Person3">
-                    <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
-                        <tbody>
-                            <tr>
-                                <td valign="middle"><p:radioButton id="personType3" for="personsType" itemIndex="2"/></td>
-                                <td><p:graphicImage name="/images/PERSON_TYPE3/walk_down1.png" style="margin-left: 30px;"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </p:panel>
-            </div>
+                            <p:panel header="Person3">
+                                <table cellspacing="0" cellpadding="0" border="0" style="height: 100px;">
+                                    <tbody>
+                                    <tr>
+                                        <td valign="middle"><p:radioButton id="personType3" for="personsType" itemIndex="2"/></td>
+                                        <td><p:graphicImage name="/images/PERSON_TYPE3/walk_down1.png" style="margin-left: 30px;"/></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </p:panel>
+                        </div>
 
-            <div style="display: flex; margin-top: 20px; margin-bottom: 20px;">
-                <div style="margin-right: 10px;">
-                    Name
-                </div>
-                <p:inputText id="Name" value="#{createPerson.person.name}"/>
-            </div>
-            <p:commandButton value="Create person" style="width: 150px;" action="#{createPerson.createPerson()}" update="@form"/>
+                        <div style="margin-top: 20px;">
+                            <p:commandButton value="Create person" style="width: 150px; margin-right: 20px;" action="#{createPerson.createPerson()}" update="@form"/>
+                            <p:commandButton value="Chat room" style="width: 150px;" action="#{createPerson.chatRoom()}" update="@form"/>
+                        </div>
 
-            <p:hotkey bind="right" update="@form" action="#{createPerson.createPerson()}"/>
-        </h:form>
+                        <p:hotkey bind="right" update="@form" action="#{createPerson.createPerson()}"/>
+                    </h:form>
+                </td>
+                <td align="right" valign="top">
+                    <p:avatar icon="pi pi-user" id="profile" styleClass="mr-2" size="xlarge" />
+                    <p:overlayPanel for="profile" style="width:350px">
+                        <p>Username: #{createPerson.person.name}</p>
+                        <p><p:commandButton action="#{logoutBean.logout()}" value="Logout" /></p>
+                    </p:overlayPanel>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </p:dialog>
 
     <h:outputScript>
