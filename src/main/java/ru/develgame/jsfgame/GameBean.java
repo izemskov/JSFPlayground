@@ -30,19 +30,19 @@ public class GameBean implements Serializable, MessageListener {
     private PlayerBean playerBean;
 
     @EJB
-    private PersonsRegistry personsRegistry;
+    private transient PersonsRegistry personsRegistry;
 
     @Inject
-    private ChangesListener changesListener;
+    private transient ChangesListener changesListener;
 
     @EJB
-    private ChatBean chatBean;
+    private transient ChatBean chatBean;
 
     @Inject
     private transient Logger logger;
 
     private List<Person> otherPersons;
-    private List<ChatMessage> chatMessages;
+    private transient List<ChatMessage> chatMessages;
 
     private boolean needUpdateOtherPersonsList = false;
     private boolean needUpdateChatMessages = false;
@@ -56,6 +56,8 @@ public class GameBean implements Serializable, MessageListener {
         otherPersons = readOtherPersonsList();
         chatMessages = readChatMessages();
         changesListener.addListener(this);
+
+        logger.severe("AAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     @PreDestroy

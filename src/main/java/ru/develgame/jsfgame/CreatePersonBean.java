@@ -16,7 +16,7 @@ public class CreatePersonBean implements Serializable {
     private PlayerBean playerBean;
 
     @EJB
-    private ChatBean chatBean;
+    private transient ChatBean chatBean;
 
     private static final long serialVersionUID = 9138108733190235780L;
 

@@ -58,7 +58,7 @@
                 </div>
                 <p:inputText id="Name" value="#{createPerson.person.name}"/>
             </div>
-            <p:commandButton value="Sign in" style="width: 100px;" action="#{createPerson.createPerson()}" update="@form"/>
+            <p:commandButton value="Create person" style="width: 100px;" action="#{createPerson.createPerson()}" update="@form"/>
 
             <p:hotkey bind="right" update="@form" action="#{createPerson.createPerson()}"/>
         </h:form>

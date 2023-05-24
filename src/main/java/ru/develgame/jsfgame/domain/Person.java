@@ -14,10 +14,10 @@ import java.util.UUID;
 @Dependent
 public class Person implements Serializable {
     @EJB
-    private PersonsRegistry personsRegistry;
+    private transient PersonsRegistry personsRegistry;
 
     @EJB
-    private NameGenUtil nameGenUtil;
+    private transient NameGenUtil nameGenUtil;
 
     private String uuid = UUID.randomUUID().toString();
 

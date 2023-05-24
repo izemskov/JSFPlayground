@@ -1,6 +1,5 @@
 package ru.develgame.jsfgame;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesInformer;
