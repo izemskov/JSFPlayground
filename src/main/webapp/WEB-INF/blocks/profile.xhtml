@@ -3,6 +3,7 @@
                 xmlns:p="http://primefaces.org/ui">
    <p:avatar icon="pi pi-user" id="profile" styleClass="mr-2" size="large" />
    <p:overlayPanel for="profile" style="width:350px" showCloseIcon="true">
+      <p:graphicImage name="/images/#{createPerson.person.personType}/walk_down1.png" style="margin-left: 30px;"/>
       <p>Username: #{createPerson.person.name}</p>
       <p><p:commandButton action="#{logoutBean.logout()}" value="Logout" /></p>
    </p:overlayPanel>
