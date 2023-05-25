@@ -15,6 +15,10 @@ public class CreatePersonBean implements Serializable {
     @Inject
     private PlayerBean playerBean;
 
+    // TODO
+    @Inject
+    private NewChatBean newChatBean;
+
     @EJB
     private transient ChatBean chatBean;
 
@@ -34,7 +38,7 @@ public class CreatePersonBean implements Serializable {
         return "GAME";
     }
 
-    public String chatRoom() {
-        throw new RuntimeException("Test");
+    public void chatRoom() {
+        newChatBean.addMessage("sefsefesfesfe");
     }
 }
