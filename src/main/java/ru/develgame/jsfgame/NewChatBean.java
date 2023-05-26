@@ -8,7 +8,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+import java.util.Collection;
 
 @Named("newChatBean")
 @RequestScoped
@@ -21,7 +23,6 @@ public class NewChatBean {
 
     public void addMessage(String message) {
         ChatMessage chatMessage = new ChatMessage(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser(), "Testsetest");
-        chatMessage.setId(1000L);
         try {
             userTransaction.begin();
             entityManager.persist(chatMessage);
@@ -30,5 +31,8 @@ public class NewChatBean {
             // TODO
             e.printStackTrace();
         }
+
+        Query query = entityManager.createQuery("SELECT e FROM ChatMessage e");
+        Collection<ChatMessage> resultList = query.getResultList();
     }
 }

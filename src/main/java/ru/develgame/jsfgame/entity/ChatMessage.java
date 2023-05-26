@@ -1,17 +1,16 @@
 package ru.develgame.jsfgame.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "CHAT_MESSAGE")
+@Table(name = "CHAT", schema = "APP")
 public class ChatMessage implements Serializable {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private int id;
 
     @Column(name = "NAME")
     private String name;
@@ -19,20 +18,24 @@ public class ChatMessage implements Serializable {
     @Column(name = "MESSAGE")
     private String message;
 
+    @Column(name = "CREATEDAT")
+    private Date createdAt;
+
     public ChatMessage() {
+        createdAt = new Date();
     }
 
     public ChatMessage(String name, String message) {
-        this.id = id;
         this.name = name;
         this.message = message;
+        createdAt = new Date();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -50,5 +53,13 @@ public class ChatMessage implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
