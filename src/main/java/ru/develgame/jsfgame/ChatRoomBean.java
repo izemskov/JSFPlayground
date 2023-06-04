@@ -12,13 +12,13 @@ import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Named("chatRoom")
 @SessionScoped
 public class ChatRoomBean implements Serializable {
-    private static final int CHAT_PAGE_LIMIT = 2;
+    private static final int CHAT_PAGE_LIMIT = 6;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -26,25 +26,40 @@ public class ChatRoomBean implements Serializable {
     @Resource
     private UserTransaction userTransaction;
 
+    private String chatMessage;
+
     public List<ChatMessage> getMessages(int offset) {
         Query query = entityManager.createNativeQuery(
                 "SELECT ID, NAME, MESSAGE, CREATEDAT FROM APP.CHAT ORDER BY CREATEDAT DESC OFFSET " + offset + " ROWS FETCH NEXT " + CHAT_PAGE_LIMIT + " ROWS ONLY",
                 ChatMessage.class);
-        return new ArrayList<>(query.getResultList());
+        List messages = new ArrayList<>(query.getResultList());
+        Collections.reverse(messages);
+        return messages;
     }
 
-    public void addMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser(), "Testsetest");
+    public void addMessage() {
+        if (chatMessage == null || chatMessage.isEmpty()) {
+            return;
+        }
+
+        ChatMessage newMessage = new ChatMessage(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser(), chatMessage);
         try {
             userTransaction.begin();
-            entityManager.persist(chatMessage);
+            entityManager.persist(newMessage);
             userTransaction.commit();
         } catch (Exception e) {
             // TODO
             e.printStackTrace();
         }
 
-        Query query = entityManager.createQuery("SELECT e FROM ChatMessage e");
-        Collection<ChatMessage> resultList = query.getResultList();
+        chatMessage = "";
+    }
+
+    public String getChatMessage() {
+        return chatMessage;
+    }
+
+    public void setChatMessage(String chatMessage) {
+        this.chatMessage = chatMessage;
     }
 }

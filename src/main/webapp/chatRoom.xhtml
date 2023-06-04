@@ -19,18 +19,33 @@
       </div>
    </div>
 
-   <div style="margin-top: 60px;">
+   <div style="margin-top: 60px; padding: 15px;">
       <h:form>
          <p:poll interval="2" update="chatMessagesBlock"/>
 
          <h:panelGroup layout="block" id="chatMessagesBlock">
             <ui:repeat value="#{chatRoom.getMessages(0)}" var="chatMessage">
-               <p:fieldset width="220" legend="#{chatMessage.name} #{chatMessage.createdAt}" style="margin-bottom: 10px;">
-                  <p class="m-0" style=" font-size: 10px;">
+               <p:fieldset width="220" legend="#{chatMessage.name} #{chatMessage.createdAt}" style="margin-bottom: 10px; font-size: 14px;">
+                  <p class="m-0" style=" font-size: 14px;">
                      #{chatMessage.message}
                   </p>
                </p:fieldset>
             </ui:repeat>
+         </h:panelGroup>
+
+         <h:panelGroup layout="block">
+            <table cellpadding="0" cellspacing="0" border="0">
+               <tbody>
+               <tr>
+                  <td>
+                     <p:inputText id="textMessage" value="#{chatRoom.chatMessage}"/>
+                  </td>
+                  <td style="padding-left: 5px;">
+                     <p:commandButton actionListener="#{chatRoom.addMessage()}" icon="pi pi-send" update="@form"/>
+                  </td>
+               </tr>
+               </tbody>
+            </table>
          </h:panelGroup>
       </h:form>
    </div>
