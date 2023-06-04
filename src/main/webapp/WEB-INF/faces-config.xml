@@ -22,6 +22,15 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/createPerson.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>CHAT</from-outcome>
+            <to-view-id>/chatRoom.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
     <application>
         <el-resolver>
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
