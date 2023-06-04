@@ -1,5 +1,6 @@
 package ru.develgame.jsfgame;
 
+import ru.develgame.jsfgame.chat.ChatRoomBean;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.player.PlayerBean;
 

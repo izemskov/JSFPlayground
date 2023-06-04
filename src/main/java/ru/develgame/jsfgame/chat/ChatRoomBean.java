@@ -1,19 +1,16 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.chat;
 
 import ru.develgame.jsfgame.entity.ChatMessage;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Named("chatRoom")
 @SessionScoped
@@ -26,16 +23,10 @@ public class ChatRoomBean implements Serializable {
     @Resource
     private UserTransaction userTransaction;
 
-    private String chatMessage;
+    @Inject
+    private ChatLazyModel chatLazyModel;
 
-    public List<ChatMessage> getMessages(int offset) {
-        Query query = entityManager.createNativeQuery(
-                "SELECT ID, NAME, MESSAGE, CREATEDAT FROM APP.CHAT ORDER BY CREATEDAT DESC OFFSET " + offset + " ROWS FETCH NEXT " + CHAT_PAGE_LIMIT + " ROWS ONLY",
-                ChatMessage.class);
-        List messages = new ArrayList<>(query.getResultList());
-        Collections.reverse(messages);
-        return messages;
-    }
+    private String chatMessage;
 
     public void addMessage() {
         if (chatMessage == null || chatMessage.isEmpty()) {
@@ -61,5 +52,9 @@ public class ChatRoomBean implements Serializable {
 
     public void setChatMessage(String chatMessage) {
         this.chatMessage = chatMessage;
+    }
+
+    public ChatLazyModel getChatLazyModel() {
+        return chatLazyModel;
     }
 }

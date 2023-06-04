@@ -21,16 +21,30 @@
 
    <div style="margin-top: 60px; padding: 15px;">
       <h:form>
-         <p:poll interval="2" update="chatMessagesBlock"/>
+
 
          <h:panelGroup layout="block" id="chatMessagesBlock">
-            <ui:repeat value="#{chatRoom.getMessages(0)}" var="chatMessage">
-               <p:fieldset width="220" legend="#{chatMessage.name} #{chatMessage.createdAt}" style="margin-bottom: 10px; font-size: 14px;">
-                  <p class="m-0" style=" font-size: 14px;">
-                     #{chatMessage.message}
-                  </p>
-               </p:fieldset>
-            </ui:repeat>
+            <p:dataTable var="chatMessage"
+                         value="#{chatRoom.chatLazyModel}"
+
+                         scrollRows="6"
+                         liveScroll="true"
+                         scrollHeight="200"
+                         lazy="true"
+                         scrollable="true">
+
+               <p:column headerText="name">
+                  <h:outputText value="#{chatMessage.name}" />
+               </p:column>
+
+               <p:column headerText="date">
+                  <h:outputText value="#{chatMessage.createdAt}" />
+               </p:column>
+
+               <p:column headerText="message">
+                  <h:outputText value="#{chatMessage.message}" />
+               </p:column>
+            </p:dataTable>
          </h:panelGroup>
 
          <h:panelGroup layout="block">
