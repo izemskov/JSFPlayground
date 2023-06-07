@@ -1,10 +1,12 @@
 package ru.develgame.jsfgame.chat;
 
-import ru.develgame.jsfgame.entity.ChatMessage;
+import ru.develgame.jsfgame.chat.entity.ChatMessage;
+import ru.develgame.jsfgame.chat.model.ChatLazyModel;
+import ru.develgame.jsfgame.user.UserBean;
 
 import javax.annotation.Resource;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -12,11 +14,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import java.io.Serializable;
 
-@Named("chatRoom")
-@SessionScoped
-public class ChatRoomBean implements Serializable {
-    private static final int CHAT_PAGE_LIMIT = 6;
+import static ru.develgame.jsfgame.chat.model.ChatLazyModel.CHAT_PAGE_LIMIT;
 
+@Named("chatRoom")
+@ViewScoped
+public class ChatRoomBean implements Serializable {
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -26,14 +28,19 @@ public class ChatRoomBean implements Serializable {
     @Inject
     private ChatLazyModel chatLazyModel;
 
+    @Inject
+    private UserBean userBean;
+
     private String chatMessage;
+
+    private int currentLoaded = CHAT_PAGE_LIMIT;
 
     public void addMessage() {
         if (chatMessage == null || chatMessage.isEmpty()) {
             return;
         }
 
-        ChatMessage newMessage = new ChatMessage(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser(), chatMessage);
+        ChatMessage newMessage = new ChatMessage(userBean.getUsername(), chatMessage);
         try {
             userTransaction.begin();
             entityManager.persist(newMessage);
@@ -46,6 +53,10 @@ public class ChatRoomBean implements Serializable {
         chatMessage = "";
     }
 
+    public boolean isOwnMessage(String username) {
+        return userBean.getUsername().equals(username);
+    }
+
     public String getChatMessage() {
         return chatMessage;
     }
@@ -56,5 +67,13 @@ public class ChatRoomBean implements Serializable {
 
     public ChatLazyModel getChatLazyModel() {
         return chatLazyModel;
+    }
+
+    public int getCurrentLoaded() {
+        return currentLoaded;
+    }
+
+    public void setCurrentLoaded(int currentLoaded) {
+        this.currentLoaded = currentLoaded;
     }
 }

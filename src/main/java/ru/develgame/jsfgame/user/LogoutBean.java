@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.user;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;

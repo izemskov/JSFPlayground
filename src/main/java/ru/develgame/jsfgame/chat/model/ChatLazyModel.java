@@ -1,9 +1,9 @@
-package ru.develgame.jsfgame.chat;
+package ru.develgame.jsfgame.chat.model;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
-import ru.develgame.jsfgame.entity.ChatMessage;
+import ru.develgame.jsfgame.chat.entity.ChatMessage;
 
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
@@ -18,7 +18,7 @@ public class ChatLazyModel extends LazyDataModel<ChatMessage> {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final int CHAT_PAGE_LIMIT = 6;
+    public static final int CHAT_PAGE_LIMIT = 6;
 
     @Override
     public int count(Map<String, FilterMeta> map) {

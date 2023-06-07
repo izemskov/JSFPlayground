@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame.entity;
+package ru.develgame.jsfgame.chat.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
