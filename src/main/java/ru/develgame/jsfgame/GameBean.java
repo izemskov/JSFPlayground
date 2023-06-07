@@ -1,12 +1,11 @@
 package ru.develgame.jsfgame;
 
 import ru.develgame.jsfgame.domain.Action;
-import ru.develgame.jsfgame.domain.ChatMessage;
 import ru.develgame.jsfgame.domain.Direction;
 import ru.develgame.jsfgame.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesListener;
 import ru.develgame.jsfgame.jms.MessagesType;
-import ru.develgame.jsfgame.player.PlayerBean;
+import ru.develgame.jsfgame.user.UserBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,7 +26,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class GameBean implements Serializable, MessageListener {
     @Inject
-    private PlayerBean playerBean;
+    private UserBean userBean;
 
     @EJB
     private transient PersonsRegistry personsRegistry;
@@ -35,14 +34,10 @@ public class GameBean implements Serializable, MessageListener {
     @Inject
     private transient ChangesListener changesListener;
 
-    @EJB
-    private transient ChatBean chatBean;
-
     @Inject
     private transient Logger logger;
 
     private List<Person> otherPersons;
-    private transient List<ChatMessage> chatMessages;
 
     private boolean needUpdateOtherPersonsList = false;
     private boolean needUpdateChatMessages = false;
@@ -54,10 +49,7 @@ public class GameBean implements Serializable, MessageListener {
     @PostConstruct
     public void init() {
         otherPersons = readOtherPersonsList();
-        chatMessages = readChatMessages();
         changesListener.addListener(this);
-
-        logger.severe("AAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     @PreDestroy
@@ -66,9 +58,9 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void updatePerson() {
-        playerBean.getPerson().updateImage();
-        playerBean.getPerson().updateTopPosition();
-        playerBean.getPerson().updateLeftPosition();
+        userBean.getPerson().updateImage();
+        userBean.getPerson().updateTopPosition();
+        userBean.getPerson().updateLeftPosition();
     }
 
     public List<Person> getOtherPersons() {
@@ -81,35 +73,35 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public void stop() {
-        playerBean.getPerson().setAction(Action.NONE);
+        userBean.getPerson().setAction(Action.NONE);
     }
 
     public void left() {
-        playerBean.getPerson().setDirection(Direction.LEFT);
-        playerBean.getPerson().setAction(Action.WALK);
+        userBean.getPerson().setDirection(Direction.LEFT);
+        userBean.getPerson().setAction(Action.WALK);
     }
 
     public void right() {
-        playerBean.getPerson().setDirection(Direction.RIGHT);
-        playerBean.getPerson().setAction(Action.WALK);
+        userBean.getPerson().setDirection(Direction.RIGHT);
+        userBean.getPerson().setAction(Action.WALK);
     }
 
     public void up() {
-        playerBean.getPerson().setDirection(Direction.UP);
-        playerBean.getPerson().setAction(Action.WALK);
+        userBean.getPerson().setDirection(Direction.UP);
+        userBean.getPerson().setAction(Action.WALK);
     }
 
     public void down() {
-        playerBean.getPerson().setDirection(Direction.DOWN);
-        playerBean.getPerson().setAction(Action.WALK);
+        userBean.getPerson().setDirection(Direction.DOWN);
+        userBean.getPerson().setAction(Action.WALK);
     }
 
     public Person getPerson() {
-        return playerBean.getPerson();
+        return userBean.getPerson();
     }
 
     private List<Person> readOtherPersonsList() {
-        return personsRegistry.getOtherPersonsList(playerBean.getPerson().getUuid());
+        return personsRegistry.getOtherPersonsList(userBean.getPerson().getUuid());
     }
 
     @Override
@@ -124,30 +116,11 @@ public class GameBean implements Serializable, MessageListener {
         }
     }
 
-    private List<ChatMessage> readChatMessages() {
-        return chatBean.getMessages();
-    }
-
-    public List<ChatMessage> getChatMessages() {
-        if (needUpdateChatMessages) {
-            chatMessages = readChatMessages();
-            needUpdateChatMessages = false;
-        }
-
-        return chatMessages;
-    }
-
     public String getChatMessage() {
         return chatMessage;
     }
 
     public void setChatMessage(String chatMessage) {
         this.chatMessage = chatMessage;
-    }
-
-    public void sendChatMessage() {
-        if (chatMessage != null && !chatMessage.isEmpty()) {
-            chatBean.addMessage(playerBean.getPerson().getName(), chatMessage);
-        }
     }
 }

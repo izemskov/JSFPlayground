@@ -1,10 +1,8 @@
 package ru.develgame.jsfgame;
 
-import ru.develgame.jsfgame.chat.ChatRoomBean;
 import ru.develgame.jsfgame.domain.Person;
-import ru.develgame.jsfgame.player.PlayerBean;
+import ru.develgame.jsfgame.user.UserBean;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,28 +12,15 @@ import java.io.Serializable;
 @SessionScoped
 public class CreatePersonBean implements Serializable {
     @Inject
-    private PlayerBean playerBean;
-
-    // TODO
-    @Inject
-    private ChatRoomBean chatRoomBean;
-
-    @EJB
-    private transient ChatBean chatBean;
+    private UserBean userBean;
 
     private static final long serialVersionUID = 9138108733190235780L;
 
     public Person getPerson() {
-        return playerBean.getPerson();
+        return userBean.getPerson();
     }
 
-    public String createPerson() {
-        if (playerBean.getPerson().getName() == null || playerBean.getPerson().getName().isEmpty()) {
-            playerBean.getPerson().setName(playerBean.getPerson().getUuid());
-        }
-
-        chatBean.personJoined(playerBean.getPerson());
-
+    public String game() {
         return "GAME";
     }
 

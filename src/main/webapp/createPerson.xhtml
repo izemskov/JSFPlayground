@@ -58,11 +58,11 @@
                         </div>
 
                         <div style="margin-top: 20px;">
-                            <p:commandButton value="Create person" style="width: 150px; margin-right: 20px;" action="#{createPerson.createPerson()}" update="@form"/>
+                            <p:commandButton value="Game" style="width: 150px; margin-right: 20px;" action="#{createPerson.game()}" update="@form"/>
                             <p:commandButton value="Chat room" style="width: 150px;" action="#{createPerson.chatRoom()}" update="@form"/>
                         </div>
 
-                        <p:hotkey bind="right" update="@form" action="#{createPerson.createPerson()}"/>
+                        <p:hotkey bind="right" update="@form" action="#{createPerson.game()}"/>
                     </h:form>
                 </td>
                 <td align="right" valign="top">
