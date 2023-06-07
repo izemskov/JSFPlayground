@@ -64,12 +64,6 @@
             <artifactId>richfaces</artifactId>
             <version>4.5.17.Final</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.ajbrown</groupId>
-            <artifactId>name-machine</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 
     <build>
