@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.common;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

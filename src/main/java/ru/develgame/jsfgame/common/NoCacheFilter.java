@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.common;
 
 import javax.faces.application.ResourceHandler;
 import javax.servlet.*;

@@ -1,6 +1,6 @@
 package ru.develgame.jsfgame.user;
 
-import ru.develgame.jsfgame.domain.Person;
+import ru.develgame.jsfgame.game.domain.Person;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;

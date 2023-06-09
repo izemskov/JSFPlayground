@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame.domain;
+package ru.develgame.jsfgame.game.domain;
 
 public enum PersonType {
     PERSON_TYPE1(50, 115, 8, 0),

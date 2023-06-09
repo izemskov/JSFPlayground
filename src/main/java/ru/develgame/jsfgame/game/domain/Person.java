@@ -1,6 +1,6 @@
-package ru.develgame.jsfgame.domain;
+package ru.develgame.jsfgame.game.domain;
 
-import ru.develgame.jsfgame.PersonsRegistry;
+import ru.develgame.jsfgame.game.PersonsRegistry;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

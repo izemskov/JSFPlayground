@@ -1,6 +1,6 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.game;
 
-import ru.develgame.jsfgame.domain.Person;
+import ru.develgame.jsfgame.game.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesInformer;
 import ru.develgame.jsfgame.jms.MessagesType;
 

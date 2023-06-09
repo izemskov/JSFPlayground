@@ -1,4 +1,4 @@
-package ru.develgame.jsfgame.chat.model;
+package ru.develgame.jsfgame.chat.jsf.model;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;

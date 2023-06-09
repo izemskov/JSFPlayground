@@ -1,8 +1,9 @@
-package ru.develgame.jsfgame;
+package ru.develgame.jsfgame.game.jsf;
 
-import ru.develgame.jsfgame.domain.Action;
-import ru.develgame.jsfgame.domain.Direction;
-import ru.develgame.jsfgame.domain.Person;
+import ru.develgame.jsfgame.game.PersonsRegistry;
+import ru.develgame.jsfgame.game.domain.Action;
+import ru.develgame.jsfgame.game.domain.Direction;
+import ru.develgame.jsfgame.game.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesListener;
 import ru.develgame.jsfgame.jms.MessagesType;
 import ru.develgame.jsfgame.user.UserBean;

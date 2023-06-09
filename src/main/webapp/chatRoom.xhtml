@@ -21,25 +21,36 @@
 
    <div style="margin-top: 60px; padding: 15px;">
       <h:form>
-         <h:panelGroup layout="block" id="chatMessagesBlock">
-            <h:panelGroup layout="block" style="margin-bottom: 20px;">
-               <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tbody>
-                  <tr>
-                     <td>
-                        <p:inputText id="textMessage" value="#{chatRoom.chatMessage}" style="width: 100%; font-size: 14px;"/>
-                     </td>
-                     <td style="padding-left: 5px;" width="20">
-                        <p:commandButton actionListener="#{chatRoom.addMessage()}" icon="pi pi-send" update="@form"/>
-                     </td>
-                  </tr>
-                  </tbody>
-               </table>
-            </h:panelGroup>
+         <p:poll interval="1" update="updateMessageGroup"/>
 
-            <p:dataTable var="chatMessage"
+         <h:panelGroup id="updateMessageGroup">
+            <h:panelGroup rendered="#{chatRoom.haveNewMessage}">
+               <p:remoteCommand name="messageShowed" actionListener="#{chatRoom.messageShowed()}" update="@form:updateMessageGroup"/>
+               <p:poll interval="1" update="chatMessagesBlock" oncomplete="messageShowed();"/>
+            </h:panelGroup>
+         </h:panelGroup>
+
+         <h:panelGroup layout="block" style="margin-bottom: 20px;">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+               <tbody>
+               <tr>
+                  <td>
+                     <p:inputText id="textMessage" value="#{chatRoom.chatMessage}" style="width: 100%; font-size: 14px;"/>
+                  </td>
+                  <td style="padding-left: 5px;" width="20">
+                     <p:commandButton actionListener="#{chatRoom.addMessage()}" icon="pi pi-send" update="@form"/>
+                  </td>
+               </tr>
+               </tbody>
+            </table>
+         </h:panelGroup>
+
+         <h:panelGroup layout="block" id="chatMessagesBlock">
+            <p:dataTable id="chatMessageTable"
+                         var="chatMessage"
+                         widgetVar="chatMessageTable"
                          value="#{chatRoom.chatLazyModel}"
-                         scrollRows="#{chatRoom.currentLoaded}"
+                         scrollRows="#{chatRoom.chatPageLimit}"
                          liveScroll="true"
                          scrollHeight="800"
                          lazy="true"
