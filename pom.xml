@@ -18,7 +18,6 @@
         <jakartaee>8.0</jakartaee>
         <primefaces-version>11.0.0</primefaces-version>
         <junit-jupiter.version>5.9.3</junit-jupiter.version>
-        <arquillian-glassfish6.version>1.0.0.Alpha1</arquillian-glassfish6.version>
     </properties>
 
     <repositories>
@@ -29,18 +28,6 @@
             <layout>default</layout>
         </repository>
     </repositories>
-
-    <!--<dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.1.11.Final</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>-->
 
     <dependencies>
         <!--J2EE-->
@@ -73,11 +60,11 @@
         </dependency>
 
         <!-- Rich faces -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.richfaces</groupId>
             <artifactId>richfaces</artifactId>
             <version>4.5.17.Final</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Tests -->
         <dependency>
@@ -98,64 +85,12 @@
             <version>1.0.0.Final</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
             <version>3.1.2.2</version>
             <scope>test</scope>
         </dependency>
-
-
-        <!--<dependency>
-            <groupId>org.jglue.cdi-unit</groupId>
-            <artifactId>cdi-unit</artifactId>
-            <version>3.1.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.weld.se</groupId>
-                    <artifactId>weld-se-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.easymock</groupId>
-                    <artifactId>easymock</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.testng</groupId>
-                    <artifactId>testng</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>javax.servlet-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.mockito</groupId>
-                    <artifactId>mockito-all</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sun.faces</groupId>
-                    <artifactId>jsf-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.deltaspike.core</groupId>
-                    <artifactId>deltaspike-core-impl</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>hk2-locator</artifactId>
-            <version>3.0.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-glassfish-managed-6</artifactId>
-            <version>${arquillian-glassfish6.version}</version>
-            <scope>test</scope>
-        </dependency>-->
-
     </dependencies>
 
     <build>
@@ -172,6 +107,7 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -180,6 +116,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
