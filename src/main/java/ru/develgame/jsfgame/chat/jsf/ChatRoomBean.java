@@ -10,6 +10,8 @@ import ru.develgame.jsfgame.user.UserBean;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
@@ -49,7 +51,13 @@ public class ChatRoomBean implements Serializable, MessageListener {
     @Inject
     private transient Logger logger;
 
-    private boolean haveNewMessage = false;
+    @Inject
+    @Push
+    private PushContext someChannel;
+
+    public void sendMessage(Object message) {
+        someChannel.send(message);
+    }
 
     private String chatMessage;
 
@@ -102,18 +110,11 @@ public class ChatRoomBean implements Serializable, MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            if (((TextMessage) message).getText().equals(MessagesType.CHAT.toString()))
-                haveNewMessage = true;
+            if (((TextMessage) message).getText().equals(MessagesType.CHAT.toString())) {
+                sendMessage("update");
+            }
         } catch (JMSException e) {
             logger.log(Level.SEVERE, "Cannot get JMS message", e);
         }
-    }
-
-    public boolean isHaveNewMessage() {
-        return haveNewMessage;
-    }
-
-    public void messageShowed() {
-        haveNewMessage = false;
     }
 }
