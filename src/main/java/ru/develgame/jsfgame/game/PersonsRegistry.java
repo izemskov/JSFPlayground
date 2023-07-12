@@ -4,10 +4,9 @@ import ru.develgame.jsfgame.game.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesInformer;
 import ru.develgame.jsfgame.jms.MessagesType;
 
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Lock;
-import javax.ejb.Singleton;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.*;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,15 @@ public class PersonsRegistry {
     @Inject
     private ChangesInformer changesInformer;
 
+    @Resource
+    private TimerService timerService;
+
     private final Map<String, Person> persons = new HashMap<>();
+
+    @PostConstruct
+    public void initialize() {
+        timerService.createTimer(1000, 100, "Interval");
+    }
 
     @Lock(WRITE)
     public void addPerson(Person person) {
@@ -40,5 +47,13 @@ public class PersonsRegistry {
     @Lock(READ)
     public List<Person> getOtherPersonsList(String uuid) {
         return persons.values().stream().filter(t -> !t.getUuid().equals(uuid)).collect(Collectors.toList());
+    }
+
+    @Timeout
+    @Lock(READ)
+    public void updatePersonTimeout(Timer timer) {
+        for (Person person : persons.values()) {
+            person.updatePerson();
+        }
     }
 }

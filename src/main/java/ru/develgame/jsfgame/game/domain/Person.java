@@ -136,12 +136,12 @@ public class Person implements Serializable {
             currentFrame = 1;
     }
 
-    public void updateImage() {
+    private void updateImage() {
         if (action != Action.NONE)
             incrementCurrentFrame();
     }
 
-    public void updateTopPosition() {
+    private void updateTopPosition() {
         if (action == Action.WALK) {
             if (getDirection() == Direction.DOWN && (getImageTop() + getHeight()) < 768)
                 setImageTop(getImageTop() + 2);
@@ -150,13 +150,19 @@ public class Person implements Serializable {
         }
     }
 
-    public void updateLeftPosition() {
+    private void updateLeftPosition() {
         if (action == Action.WALK) {
             if (getDirection() == Direction.LEFT && getImageLeft() > 0)
                 setImageLeft(getImageLeft() - 2);
             if (getDirection() == Direction.RIGHT && (getImageLeft() + getWidth()) < 1024)
                 setImageLeft(getImageLeft() + 2);
         }
+    }
+
+    public void updatePerson() {
+        updateImage();
+        updateTopPosition();
+        updateLeftPosition();
     }
 
     public Action getAction() {

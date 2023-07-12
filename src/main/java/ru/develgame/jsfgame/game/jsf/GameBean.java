@@ -58,12 +58,6 @@ public class GameBean implements Serializable, MessageListener {
         changesListener.removeListener(this);
     }
 
-    public void updatePerson() {
-        userBean.getPerson().updateImage();
-        userBean.getPerson().updateTopPosition();
-        userBean.getPerson().updateLeftPosition();
-    }
-
     public List<Person> getOtherPersons() {
         if (needUpdateOtherPersonsList) {
             otherPersons = readOtherPersonsList();
