@@ -55,3 +55,66 @@
 .topbar-form {
     margin-left: auto;
 }
+
+.dialog-left-top {
+    background-image: url(#{resource['images/DIALOG/left_top.png']});
+    background-repeat: no-repeat;
+    width: 7px;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-top {
+    background-image: url(#{resource['images/DIALOG/top.png']});
+    background-repeat: repeat-x;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-right-top {
+    background-image: url(#{resource['images/DIALOG/right_top.png']});
+    background-repeat: no-repeat;
+    width: 7px;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-left-bottom {
+    background-image: url(#{resource['images/DIALOG/left_bottom.png']});
+    background-repeat: no-repeat;
+    width: 7px;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-bottom {
+    background-image: url(#{resource['images/DIALOG/bottom.png']});
+    background-repeat: repeat-x;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-right-bottom {
+    background-image: url(#{resource['images/DIALOG/right_bottom.png']});
+    background-repeat: no-repeat;
+    width: 7px;
+    height: 7px;
+    font-size: 1pt;
+}
+
+.dialog-left {
+    background-image: url(#{resource['images/DIALOG/left.png']});
+    background-repeat: repeat-y;
+    width: 7px;
+}
+
+.dialog-right {
+    background-image: url(#{resource['images/DIALOG/right.png']});
+    background-repeat: repeat-y;
+    width: 7px;
+}
+
+.dialog {
+    background-color: white;
+    font-family: monospace;
+}
