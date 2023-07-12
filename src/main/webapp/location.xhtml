@@ -23,8 +23,29 @@
                                              text-align: center;
                                              position: absolute;
                                              top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
-                        <p:outputLabel styleClass="playerName" value="#{gameBean.person.name}"/>
+                        <h:panelGroup layout="block" style="margin-bottom: 10px;" rendered="#{gameBean.getPersonLastMessage(gameBean.person.name) ne null}">
+                            <table cellpadding="0" cellspacing="0" width="100" border="0">
+                                <tr style="height: 7px;">
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-left-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    <td width="100%" height="7" class="dialog-top"></td>
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-right-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                </tr>
+                                <tr>
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-left"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    <td width="100%" class="dialog">
+                                        <p:outputLabel styleClass="dialog-text" value="#{gameBean.getPersonLastMessage(gameBean.person.name)}"/>
+                                    </td>
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-right"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                </tr>
+                                <tr style="height: 7px;">
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-left-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    <td width="100%" height="7" class="dialog-bottom"/>
+                                    <td width="7" nowrap="nowrap" height="7" class="dialog-right-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
                         <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
+                        <p:outputLabel styleClass="playerName" value="#{gameBean.person.name}"/>
                     </h:panelGroup>
 
                     <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
@@ -34,32 +55,31 @@
                                                   text-align: center;
                                                   position: absolute;
                                                   top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
-                            <p:outputLabel styleClass="enemyName" value="#{otherPerson.name}"/>
+                            <h:panelGroup layout="block" style="margin-bottom: 10px;" rendered="#{gameBean.getPersonLastMessage(otherPerson.name) ne null}">
+                                <table cellpadding="0" cellspacing="0" width="100" border="0">
+                                    <tr style="height: 7px;">
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-left-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                        <td width="100%" height="7" class="dialog-top"></td>
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-right-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-left"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                        <td width="100%" class="dialog">
+                                            <p:outputLabel styleClass="dialog-text" value="#{gameBean.getPersonLastMessage(otherPerson.name)}"/>
+                                        </td>
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-right"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    </tr>
+                                    <tr style="height: 7px;">
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-left-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                        <td width="100%" height="7" class="dialog-bottom"/>
+                                        <td width="7" nowrap="nowrap" height="7" class="dialog-right-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
+                                    </tr>
+                                </table>
+                            </h:panelGroup>
                             <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
+                            <p:outputLabel styleClass="enemyName" value="#{otherPerson.name}"/>
                         </h:panelGroup>
                     </ui:repeat>
-
-                    <div style="position: absolute; left: 100px; top: 100px; width: 100px; height: 100px;">
-                        <table cellpadding="0" cellspacing="0" width="100" border="0">
-                            <tr style="height: 7px;">
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-left-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                                <td width="100%" height="7" class="dialog-top"></td>
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-right-top"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                            </tr>
-                            <tr>
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-left"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                                <td width="100%" class="dialog">
-                                    TestTestTest
-                                </td>
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-right"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                            </tr>
-                            <tr style="height: 7px;">
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-left-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                                <td width="100%" height="7" class="dialog-bottom"/>
-                                <td width="7" nowrap="nowrap" height="7" class="dialog-right-bottom"><p:graphicImage name="images/DIALOG/px.gif" width="7" height="1"/></td>
-                            </tr>
-                        </table>
-                    </div>
                 </h:panelGroup>
             </h:panelGroup>
         </h:form>

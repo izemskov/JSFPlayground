@@ -52,11 +52,11 @@ public class ChatRoomBean implements Serializable, MessageListener {
     private transient Logger logger;
 
     @Inject
-    @Push
-    private PushContext someChannel;
+    @Push(channel = "chatRoomChannel")
+    private PushContext chatRoomChannel;
 
     public void sendMessage(Object message) {
-        someChannel.send(message);
+        chatRoomChannel.send(message);
     }
 
     private String chatMessage;

@@ -118,3 +118,8 @@
     background-color: white;
     font-family: monospace;
 }
+
+.dialog-text {
+    font-size: 12px !important;
+    font-family: monospace !important;
+}
