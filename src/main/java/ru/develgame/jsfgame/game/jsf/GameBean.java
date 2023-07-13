@@ -1,5 +1,6 @@
 package ru.develgame.jsfgame.game.jsf;
 
+import ru.develgame.jsfgame.chat.dao.ChatMessageDao;
 import ru.develgame.jsfgame.chat.entity.ChatMessage;
 import ru.develgame.jsfgame.game.PersonsRegistry;
 import ru.develgame.jsfgame.game.domain.Action;
@@ -12,7 +13,6 @@ import ru.develgame.jsfgame.user.UserBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.push.Push;
@@ -23,10 +23,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
@@ -47,30 +43,23 @@ public class GameBean implements Serializable, MessageListener {
     @Inject
     private transient Logger logger;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Inject
+    private transient ChangesInformer changesInformer;
+
+    @Inject
+    private transient ChatMessageDao chatMessageDao;
 
     @Inject
     @Push(channel = "chatChannel")
     private PushContext chatChannel;
 
-    @Resource
-    private UserTransaction userTransaction;
-
-    @Inject
-    private ChangesInformer changesInformer;
-
     private List<Person> otherPersons;
-
-    private List<ChatMessage> chatMessages;
 
     private Map<String, String> personLastMessage = new HashMap<>();
 
     private boolean needUpdateOtherPersonsList = false;
 
     private String chatMessage;
-
-    private static final long serialVersionUID = -347847984647877844L;
 
     @PostConstruct
     public void init() {
@@ -132,14 +121,15 @@ public class GameBean implements Serializable, MessageListener {
             }
             else if (((TextMessage) message).getText().equals(MessagesType.CHAT.toString())) {
                 chatChannel.send("update");
-                Query query = entityManager.createNativeQuery(
-                        "SELECT ID, NAME, MESSAGE, CREATEDAT FROM APP.CHAT ORDER BY CREATEDAT DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY",
-                        ChatMessage.class);
-                ChatMessage lastMessage = (ChatMessage) query.getSingleResult();
-                if (lastMessage != null) {
-                    personLastMessage.put(lastMessage.getName(), lastMessage.getMessage());
-                }
 
+                ChatMessage lastMessage = chatMessageDao.getLastMessage();
+                if (lastMessage != null) {
+                    String text = lastMessage.getMessage();
+                    if (text.length() > 30) {
+                        text = text.substring(0, 27) + "...";
+                    }
+                    personLastMessage.put(lastMessage.getName(), text);
+                }
             }
         } catch (JMSException e) {
             logger.log(Level.SEVERE, "Cannot get JMS message", e);
@@ -155,11 +145,7 @@ public class GameBean implements Serializable, MessageListener {
     }
 
     public List<ChatMessage> getChatMessages() {
-        Query query = entityManager.createNativeQuery(
-                "SELECT ID, NAME, MESSAGE, CREATEDAT FROM APP.CHAT ORDER BY CREATEDAT DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY",
-                ChatMessage.class);
-        List messages = new ArrayList<>(query.getResultList());
-        return messages;
+        return chatMessageDao.getChatMessages(0, 10);
     }
 
     public String getPersonLastMessage(String name) {
@@ -171,17 +157,12 @@ public class GameBean implements Serializable, MessageListener {
             return;
         }
 
-        ChatMessage newMessage = new ChatMessage(userBean.getUsername(), chatMessage);
-        try {
-            userTransaction.begin();
-            entityManager.persist(newMessage);
-            userTransaction.commit();
-
+        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage))) {
             changesInformer.sendMessage(MessagesType.CHAT);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Cannot add chat message", e);
         }
 
         chatMessage = "";
     }
+
+    private static final long serialVersionUID = -347847984647877844L;
 }

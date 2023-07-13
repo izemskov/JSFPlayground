@@ -7,8 +7,6 @@ import java.io.Serializable;
 @Named("createPerson")
 @SessionScoped
 public class CreatePersonBean implements Serializable {
-    private static final long serialVersionUID = 9138108733190235780L;
-
     public String game() {
         return "GAME";
     }
@@ -16,4 +14,6 @@ public class CreatePersonBean implements Serializable {
     public String chatRoom() {
         return "CHAT";
     }
+
+    private static final long serialVersionUID = 9138108733190235780L;
 }

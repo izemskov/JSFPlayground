@@ -62,4 +62,6 @@ public class ChatMessage implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+    private static final long serialVersionUID = -1186283662169435291L;
 }

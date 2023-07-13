@@ -27,4 +27,6 @@ public class UserBean implements Serializable {
     public Person getPerson() {
         return person;
     }
+
+    private static final long serialVersionUID = -7615739262702035246L;
 }

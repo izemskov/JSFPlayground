@@ -7,6 +7,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -30,8 +31,6 @@ public class Person implements Serializable {
     protected Action action = Action.NONE;
 
     protected String name;
-
-    private static final long serialVersionUID = -4004510546941410977L;
 
     @PostConstruct
     public void init() {
@@ -113,8 +112,8 @@ public class Person implements Serializable {
             currentAction = Action.WALK;
 
         return "/images/" + personType.toString() + "/"
-                + currentAction.toString().toLowerCase() + "_"
-                + direction.toString().toLowerCase()
+                + currentAction.toString().toLowerCase(Locale.US) + "_"
+                + direction.toString().toLowerCase(Locale.US)
                 + currentFrame + ".png";
     }
 
@@ -126,7 +125,7 @@ public class Person implements Serializable {
         return personType.getWidth();
     }
 
-    public void incrementCurrentFrame() {
+    private void incrementCurrentFrame() {
         int maxFrame = personType.getMaxFrame();
         if (action == Action.ATTACK)
             maxFrame = personType.getMaxAttackFrame();
@@ -174,4 +173,6 @@ public class Person implements Serializable {
             setCurrentFrame(1);
         this.action = action;
     }
+
+    private static final long serialVersionUID = -4004510546941410977L;
 }
