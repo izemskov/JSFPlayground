@@ -1,9 +1,12 @@
 package ru.develgame.jsfgame.game.jsf;
 
+import ru.develgame.jsfgame.chat.dao.ChatMessageDao;
+import ru.develgame.jsfgame.chat.entity.ChatMessage;
 import ru.develgame.jsfgame.game.PersonsRegistry;
 import ru.develgame.jsfgame.game.domain.Action;
 import ru.develgame.jsfgame.game.domain.Direction;
 import ru.develgame.jsfgame.game.domain.Person;
+import ru.develgame.jsfgame.jms.ChangesInformer;
 import ru.develgame.jsfgame.jms.ChangesListener;
 import ru.develgame.jsfgame.jms.MessagesType;
 import ru.develgame.jsfgame.user.UserBean;
@@ -12,6 +15,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
@@ -38,14 +43,23 @@ public class GameBean implements Serializable, MessageListener {
     @Inject
     private transient Logger logger;
 
+    @Inject
+    private transient ChangesInformer changesInformer;
+
+    @Inject
+    private transient ChatMessageDao chatMessageDao;
+
+    @Inject
+    @Push(channel = "chatChannel")
+    private PushContext chatChannel;
+
     private List<Person> otherPersons;
 
+    private Map<String, String> personLastMessage = new HashMap<>();
+
     private boolean needUpdateOtherPersonsList = false;
-    private boolean needUpdateChatMessages = false;
 
     private String chatMessage;
-
-    private static final long serialVersionUID = -347847984647877844L;
 
     @PostConstruct
     public void init() {
@@ -102,10 +116,21 @@ public class GameBean implements Serializable, MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            if (((TextMessage) message).getText().equals(MessagesType.PERSON.toString()))
+            if (((TextMessage) message).getText().equals(MessagesType.PERSON.toString())) {
                 needUpdateOtherPersonsList = true;
-            else
-                needUpdateChatMessages = true;
+            }
+            else if (((TextMessage) message).getText().equals(MessagesType.CHAT.toString())) {
+                chatChannel.send("update");
+
+                ChatMessage lastMessage = chatMessageDao.getLastMessage();
+                if (lastMessage != null) {
+                    String text = lastMessage.getMessage();
+                    if (text.length() > 30) {
+                        text = text.substring(0, 27) + "...";
+                    }
+                    personLastMessage.put(lastMessage.getName(), text);
+                }
+            }
         } catch (JMSException e) {
             logger.log(Level.SEVERE, "Cannot get JMS message", e);
         }
@@ -118,4 +143,26 @@ public class GameBean implements Serializable, MessageListener {
     public void setChatMessage(String chatMessage) {
         this.chatMessage = chatMessage;
     }
+
+    public List<ChatMessage> getChatMessages() {
+        return chatMessageDao.getChatMessages(0, 10);
+    }
+
+    public String getPersonLastMessage(String name) {
+        return personLastMessage.get(name);
+    }
+
+    public void addMessage() {
+        if (chatMessage == null || chatMessage.isEmpty()) {
+            return;
+        }
+
+        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage))) {
+            changesInformer.sendMessage(MessagesType.CHAT);
+        }
+
+        chatMessage = "";
+    }
+
+    private static final long serialVersionUID = -347847984647877844L;
 }

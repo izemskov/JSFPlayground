@@ -23,7 +23,7 @@
    <div style="margin-top: 60px; padding: 15px;">
       <h:form>
          <p:remoteCommand name="messageShowed" update="@form:chatMessagesBlock"/>
-         <f:websocket channel="someChannel" onmessage="function(m){messageShowed();}"/>
+         <f:websocket channel="chatRoomChannel" onmessage="function(m){messageShowed();}"/>
 
          <h:panelGroup layout="block" style="margin-bottom: 20px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
