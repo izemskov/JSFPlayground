@@ -5,7 +5,7 @@
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <navigation-rule>
-        <from-view-id>/createPerson.xhtml</from-view-id>
+        <from-view-id>/*</from-view-id>
         <navigation-case>
             <from-outcome>GAME</from-outcome>
             <to-view-id>/game.xhtml</to-view-id>
@@ -23,10 +23,19 @@
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/createPerson.xhtml</from-view-id>
+        <from-view-id>/*</from-view-id>
         <navigation-case>
             <from-outcome>CHAT</from-outcome>
             <to-view-id>/chatRoom.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>CHOOSE_PERSON</from-outcome>
+            <to-view-id>/createPerson.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

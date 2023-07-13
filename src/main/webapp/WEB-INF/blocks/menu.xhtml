@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+   <h:graphicImage value = "/resources/images/logo.png"/>
+
+   <div>
+      <p:commandButton value="Visual chat" style="width: 150px; margin-right: 20px;" action="#{menu.game()}"/>
+      <p:commandButton value="Text chat" style="width: 150px; margin-right: 20px;" action="#{menu.chatRoom()}"/>
+      <p:commandButton value="Choose person" style="width: 150px;" action="#{menu.choosePerson()}"/>
+   </div>
+
+   <div class="topbar-form">
+      <ul class="topbar-menu">
+         <ui:include src="/WEB-INF/blocks/profile.xhtml"/>
+      </ul>
+   </div>
+</ui:composition>
