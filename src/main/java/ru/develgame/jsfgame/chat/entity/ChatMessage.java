@@ -21,13 +21,18 @@ public class ChatMessage implements Serializable {
     @Column(name = "CREATEDAT")
     private Date createdAt;
 
+    @ManyToOne
+    @JoinColumn(name="CHAT_ROOM_ID")
+    private ChatRoom chatRoomId;
+
     public ChatMessage() {
         createdAt = new Date();
     }
 
-    public ChatMessage(String name, String message) {
+    public ChatMessage(String name, String message, ChatRoom chatRoomId) {
         this.name = name;
         this.message = message;
+        this.chatRoomId = chatRoomId;
         createdAt = new Date();
     }
 
@@ -61,6 +66,14 @@ public class ChatMessage implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public ChatRoom getChatRoomId() {
+        return chatRoomId;
+    }
+
+    public void setChatRoomId(ChatRoom chatRoomId) {
+        this.chatRoomId = chatRoomId;
     }
 
     private static final long serialVersionUID = -1186283662169435291L;

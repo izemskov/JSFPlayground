@@ -2,6 +2,7 @@ package ru.develgame.jsfgame.chat.jsf;
 
 import ru.develgame.jsfgame.chat.dao.ChatMessageDao;
 import ru.develgame.jsfgame.chat.entity.ChatMessage;
+import ru.develgame.jsfgame.chat.entity.ChatRoom;
 import ru.develgame.jsfgame.chat.jsf.model.ChatLazyModel;
 import ru.develgame.jsfgame.jms.ChangesInformer;
 import ru.develgame.jsfgame.jms.ChangesListener;
@@ -69,7 +70,8 @@ public class ChatRoomBean implements Serializable, MessageListener {
             return;
         }
 
-        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage))) {
+        // TODO
+        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage, new ChatRoom()))) {
             changesInformer.sendMessage(MessagesType.CHAT);
         }
 
