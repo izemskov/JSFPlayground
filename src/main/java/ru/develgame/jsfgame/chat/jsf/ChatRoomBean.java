@@ -69,7 +69,8 @@ public class ChatRoomBean implements Serializable, MessageListener {
             return;
         }
 
-        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage))) {
+        // TODO
+        if (chatMessageDao.addChatMessage(new ChatMessage(userBean.getUsername(), chatMessage, null))) {
             changesInformer.sendMessage(MessagesType.CHAT);
         }
 
