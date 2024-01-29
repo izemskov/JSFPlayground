@@ -69,6 +69,15 @@
                             </p:panel>
                         </div>
 
+                        <div style="margin-top: 10px;">
+                            <h3>Select chat room</h3>
+                            <p:selectOneListbox id="selectChatRoom"
+                                                value="#{createPerson.chatRoom}"
+                                                converter="#{chatRoomConverter}">
+                                <f:selectItems value="#{createPerson.chatRooms}" var="c" itemLabel="#{c.name}" itemValue="#{c}"/>
+                            </p:selectOneListbox>
+                        </div>
+
                         <div style="margin-top: 20px;">
                             <p:commandButton value="Visual chat" style="width: 150px; margin-right: 20px;" action="#{menu.game()}" update="@form"/>
                             <p:commandButton value="Text chat" style="width: 150px;" action="#{menu.chatRoom()}" update="@form"/>

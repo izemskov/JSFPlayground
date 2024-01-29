@@ -21,6 +21,13 @@ public class ChatRoom {
     @OneToMany(mappedBy = "chatRoomId", cascade = CascadeType.ALL)
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
+    public ChatRoom(String name) {
+        this.name = name;
+    }
+
+    public ChatRoom() {
+    }
+
     public int getId() {
         return id;
     }
