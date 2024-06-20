@@ -44,7 +44,7 @@
                                 </tr>
                             </table>
                         </h:panelGroup>
-                        <p:graphicImage id="sprite" name="#{gameBean.person.image}"/>
+                        <p:graphicImage id="sprite" name="#{gameBean.person.image}" height="#{gameBean.person.height}"/>
                         <p:outputLabel styleClass="playerName" value="#{gameBean.person.name}"/>
                     </h:panelGroup>
 
@@ -76,7 +76,7 @@
                                     </tr>
                                 </table>
                             </h:panelGroup>
-                            <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}"/>
+                            <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}" height="#{otherPerson.height}"/>
                             <p:outputLabel styleClass="enemyName" value="#{otherPerson.name}"/>
                         </h:panelGroup>
                     </ui:repeat>

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebFilter("/*")
 public class NoCacheFilter implements Filter {
@@ -18,6 +19,9 @@ public class NoCacheFilter implements Filter {
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             res.setHeader("Pragma", "no-cache");
             res.setDateHeader("Expires", 0);
+        } else if (req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/images/PERSON_TYPE")) {
+            res.setHeader("Cache-Control", "max-age=25920000, private");
+            res.setDateHeader("Expires", new Date().getTime() + 2592000000L);
         }
 
         chain.doFilter(request, response);
