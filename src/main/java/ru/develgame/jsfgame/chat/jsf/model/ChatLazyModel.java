@@ -6,8 +6,8 @@ import org.primefaces.model.SortMeta;
 import ru.develgame.jsfgame.chat.dao.ChatMessageDao;
 import ru.develgame.jsfgame.chat.entity.ChatMessage;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Map;
 

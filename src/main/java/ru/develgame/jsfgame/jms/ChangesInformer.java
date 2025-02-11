@@ -1,10 +1,10 @@
 package ru.develgame.jsfgame.jms;
 
-import javax.annotation.Resource;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.jms.*;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.jms.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

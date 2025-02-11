@@ -4,17 +4,17 @@ import ru.develgame.jsfgame.game.domain.Person;
 import ru.develgame.jsfgame.jms.ChangesInformer;
 import ru.develgame.jsfgame.jms.MessagesType;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.*;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import jakarta.ejb.*;
+import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static javax.ejb.LockType.READ;
-import static javax.ejb.LockType.WRITE;
+import static jakarta.ejb.LockType.READ;
+import static jakarta.ejb.LockType.WRITE;
 
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)

@@ -2,14 +2,14 @@ package ru.develgame.jsfgame.chat.dao;
 
 import ru.develgame.jsfgame.chat.entity.ChatMessage;
 
-import javax.annotation.Resource;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.UserTransaction;
+import jakarta.annotation.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.transaction.UserTransaction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

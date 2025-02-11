@@ -2,10 +2,10 @@ package ru.develgame.jsfgame.game.domain;
 
 import ru.develgame.jsfgame.game.PersonsRegistry;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.EJB;
-import javax.enterprise.context.Dependent;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.Dependent;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Random;
