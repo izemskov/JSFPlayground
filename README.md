@@ -1,4 +1,4 @@
-# JSFChat
+# JSF Playground
 Playground for learning JavaEE (Glassfish, CDI, JSF + PrimeFaces, Hibernate, Apache derby)
 
 ![Screenshot](screens/screen1.png)
