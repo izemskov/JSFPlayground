@@ -19,10 +19,13 @@
                 <h:panelGroup layout="block" id="location2" styleClass="location2">
                     <h:panelGroup layout="block"
                                   id="player"
-                                  style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
-                                             text-align: center;
-                                             position: absolute;
-                                             top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
+                                  style="width: #{gameBean.person.width}px; height: #{gameBean.person.getTotalHeight()}px;
+                                         background-image: url('#{gameBean.person.image}');
+                                         background-repeat: no-repeat;
+                                         background-position: center bottom;
+                                         text-align: center;
+                                         position: absolute;
+                                         top: #{gameBean.person.getTopPosition()}px; left: #{gameBean.person.getLeftPosition()}px;">
                         <h:panelGroup layout="block" style="margin-bottom: 10px;" rendered="#{gameBean.getPersonLastMessage(gameBean.person.name) ne null}">
                             <table cellpadding="0" cellspacing="0" width="100" border="0">
                                 <tr style="height: 7px;">
@@ -44,17 +47,21 @@
                                 </tr>
                             </table>
                         </h:panelGroup>
-                        <p:graphicImage id="sprite" name="#{gameBean.person.image}" height="#{gameBean.person.height}"/>
-                        <p:outputLabel styleClass="playerName" value="#{gameBean.person.name}"/>
+                        <p:outputLabel styleClass="playerName"
+                                       style="margin-top: #{gameBean.person.getTotalHeight()}px"
+                                       value="#{gameBean.person.name}"/>
                     </h:panelGroup>
 
                     <ui:repeat value="#{gameBean.otherPersons}" var="otherPerson">
                         <h:panelGroup layout="block"
                                       id="enemy#{otherPerson.uuid}"
-                                      style="width: #{gameBean.person.width}px; height: #{gameBean.person.height}px;
-                                                  text-align: center;
-                                                  position: absolute;
-                                                  top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
+                                      style="width: #{otherPerson.width}px; height: #{otherPerson.getTotalHeight()}px;
+                                         background-image: url('#{otherPerson.image}');
+                                         background-repeat: no-repeat;
+                                         background-position: center bottom;
+                                         text-align: center;
+                                         position: absolute;
+                                         top: #{otherPerson.getTopPosition()}px; left: #{otherPerson.getLeftPosition()}px;">
                             <h:panelGroup layout="block" style="margin-bottom: 10px;" rendered="#{gameBean.getPersonLastMessage(otherPerson.name) ne null}">
                                 <table cellpadding="0" cellspacing="0" width="100" border="0">
                                     <tr style="height: 7px;">
@@ -76,8 +83,9 @@
                                     </tr>
                                 </table>
                             </h:panelGroup>
-                            <p:graphicImage id="sprite#{otherPerson.uuid}" name="#{otherPerson.image}" height="#{otherPerson.height}"/>
-                            <p:outputLabel styleClass="enemyName" value="#{otherPerson.name}"/>
+                            <p:outputLabel styleClass="enemyName"
+                                           style="margin-top: #{otherPerson.getTotalHeight()}px"
+                                           value="#{otherPerson.name}"/>
                         </h:panelGroup>
                     </ui:repeat>
                 </h:panelGroup>

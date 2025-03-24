@@ -104,14 +104,18 @@ public class Person implements Serializable {
         if (currentAction == Action.NONE)
             currentAction = Action.WALK;
 
-        return "/images/" + personType.toString() + "/"
+        return "jakarta.faces.resource/images/" + personType.toString() + "/"
                 + currentAction.toString().toLowerCase(Locale.US) + "_"
                 + direction.toString().toLowerCase(Locale.US)
-                + currentFrame.get() + ".png";
+                + currentFrame + ".png.xhtml";
     }
 
     public int getHeight() {
         return personType.getHeight();
+    }
+
+    public int getTotalHeight() {
+        return personType.getHeight() + 30;
     }
 
     public int getWidth() {
