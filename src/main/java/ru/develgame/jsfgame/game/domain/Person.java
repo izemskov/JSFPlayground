@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Dependent
 public class Person implements Serializable {
@@ -18,7 +19,7 @@ public class Person implements Serializable {
 
     private String uuid = UUID.randomUUID().toString();
 
-    protected int currentFrame = 1;
+    protected AtomicInteger currentFrame = new AtomicInteger(1);
 
     protected int imageTop = 200;
 
@@ -40,14 +41,6 @@ public class Person implements Serializable {
     @PreDestroy
     public void finite() {
         personsRegistry.removePerson(this);
-    }
-
-    public int getCurrentFrame() {
-        return currentFrame;
-    }
-
-    public void setCurrentFrame(int currentFrame) {
-        this.currentFrame = currentFrame;
     }
 
     public int getImageTop() {
@@ -72,7 +65,7 @@ public class Person implements Serializable {
 
     public void setDirection(Direction direction) {
         if (this.direction != direction) {
-            setCurrentFrame(1);
+            currentFrame.set(1);
         }
 
         this.direction = direction;
@@ -114,7 +107,7 @@ public class Person implements Serializable {
         return "/images/" + personType.toString() + "/"
                 + currentAction.toString().toLowerCase(Locale.US) + "_"
                 + direction.toString().toLowerCase(Locale.US)
-                + currentFrame + ".png";
+                + currentFrame.get() + ".png";
     }
 
     public int getHeight() {
@@ -127,12 +120,14 @@ public class Person implements Serializable {
 
     private void incrementCurrentFrame() {
         int maxFrame = personType.getMaxFrame();
-        if (action == Action.ATTACK)
-            maxFrame = personType.getMaxAttackFrame();
 
-        currentFrame++;
-        if (currentFrame > maxFrame)
-            currentFrame = 1;
+        int currentFrameVal = currentFrame.get() + 1;
+
+        if (currentFrameVal > maxFrame) {
+            currentFrameVal = 1;
+        }
+
+        currentFrame.set(currentFrameVal);
     }
 
     private void updateImage() {
@@ -169,8 +164,6 @@ public class Person implements Serializable {
     }
 
     public void setAction(Action action) {
-        if ((this.action == Action.WALK && action == Action.ATTACK) || (this.action == Action.ATTACK && action == Action.WALK))
-            setCurrentFrame(1);
         this.action = action;
     }
 
